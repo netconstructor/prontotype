@@ -1,8 +1,49 @@
-{% include header.html %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<script>var html = document.getElementsByTagName('html')[0]; html.className = html.className+' hasJS';</script>
+	
+	<link rel="stylesheet" href="/assets/css/main.css" media="all">
+	
+	<title>{{ page.title }} :: Prontotype :: Data-driven interactive prototyping framework</title>
+</head>
+<body>
+	
+<div class="wrapper">
+	
+	<div id="header" class="receptacle">
+		
+		<div class="inner">
+			
+			<div class="head">
+				
+				<a class="branding title" href="/"><span>Pronto</span>type</a>
+				
+			</div>
+
+			<ul class="nav">
+				<li><a href="/">Overview</a></li>
+				<li><a href="/docs/">Documentation</a>
+					{% include docsnav.html %}
+				</li>
+				<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download</a></li>
+			</ul>
+			
+		</div>		
+
+	</div>
 
 	<div id="content" class="receptacle">
 	
-		<div class='section'>
+		<div class='inner'>
+			
+			<div class="head">
+				
+				<h1 class="title">{{page.title}}</h1>
+				
+			</div>
 			
 			{{ content }}
 			
@@ -10,4 +51,7 @@
 		
 	</div>
 	
-{% include footer.html %}
+</div>
+
+</body>	
+</html>

@@ -3,26 +3,105 @@ layout: default
 title: Configuration
 ---
 
-<p>Prontotype's default configuration should probably be just fine for you. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
+<div class="prose">
+	
+	<p>Prontotype's default configuration should probably be just fine for you. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
 
-<p>Here's a brief overview of the settings, what they do and their default values:</p>
+	<p>Here's a brief overview of the settings, what they do and their default values:</p>
+	
+</div>
 
-<!-- table>
+<table>
 	<thead>
 	<tr>
-		<th>Name</th>
-		<th>Description</th>
-		<th>Default</th>
+		<th class="name">Name</th>
+		<th class="desc">Description</th>
+		<th class="default">Default</th>
 	</tr>			
 	</thead>
 	<tbody>
 		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td class="name">login_trigger</td>
+			<td class="desc">The query string key that will trigger a simulated log in. See the <a href="/docs/users.html">Users &amp; Logins</a> section for more information.</td>
+			<td class="default string">login</td>
+		</tr>
+		<tr>
+			<td class="name">logout_trigger</td>
+			<td class="desc">The query string key that will trigger a simulated log out. See the <a href="/docs/users.html">Users &amp; Logins</a> section for more information.</td>
+			<td class="default string">logout</td>
+		</tr>
+		<tr>
+			<td class="name">prefix</td>
+			<td class="desc">The string that will be used as a prefix to namespace cookie names</td>
+			<td class="default string">prontotype-</td>
+		</tr>
+		<tr>
+			<td class="name">cookie_lifetime</td>
+			<td class="desc">How long the cookies set by Prontotype should persist for (in seconds).</td>
+			<td class="default int">604800</td>
+		</tr>
+		<tr>
+			<td class="name">debug</td>
+			<td class="desc">If set to <code>true</code> this will enable some helpful debugging tools in case of problems. See the <a href="/docs/debugging.html">Debugging</a> section for more information.</td>
+			<td class="default boolean">false</td>
+		</tr>
+		<tr>
+			<td class="name">auto_reload</td>
+			<td class="desc"></td>
+			<td class="default boolean">true</td>
+		</tr>
+		<tr>
+			<td class="name">caching</td>
+			<td class="desc"></td>
+			<td class="default boolean">true</td>
+		</tr>
+		<tr>
+			<td class="name">charset</td>
+			<td class="desc"></td>
+			<td class="default string">utf-8</td>
+		</tr>
+		<tr>
+			<td class="name">csv_headers</td>
+			<td class="desc"></td>
+			<td class="default boolean">true</td>
+		</tr>
+		<tr>
+			<td class="name">csv_delimiter</td>
+			<td class="desc"></td>
+			<td class="default string">,</td>
+		</tr>
+		<tr>
+			<td class="name">csv_enclosure</td>
+			<td class="desc"></td>
+			<td class="default string">\"</td>
+		</tr>
+		<tr>
+			<td class="name">csv_escape</td>
+			<td class="desc"></td>
+			<td class="default string">\</td>
+		</tr>
+		<tr>
+			<td class="name">csv_id_header</td>
+			<td class="desc"></td>
+			<td class="default string">id</td>
+		</tr>
+		<tr>
+			<td class="name">homepage_nicename</td>
+			<td class="desc"></td>
+			<td class="default string">Home</td>
+		</tr>
+		<tr>
+			<td class="name">index_nicename</td>
+			<td class="desc"></td>
+			<td class="default string">Overview</td>
+		</tr>
+		<tr>
+			<td class="name">short_url_trigger</td>
+			<td class="desc"></td>
+			<td class="default string">p</td>
 		</tr>
 	</tbody>
-</table -->
+</table>
 
 
 <p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>

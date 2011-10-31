@@ -101,7 +101,7 @@ code {
 /* @group Prose styles */
 
 .prose {
-    max-width: 70%;
+/*    max-width: 70%;*/
 }
 
 .prose h2 {
@@ -114,6 +114,7 @@ code {
 .prose .lede {
     font-size: 24px;
     color: #888;
+    max-width: 70%;
 }
 
 .prose .lede em {
@@ -185,6 +186,29 @@ button {
 }
 
 /* @end Messages */
+
+/* @group Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5em;
+}
+
+td, th {
+    border: 1px solid #DDD;
+    background: #FFF;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    border: 1px solid #444;
+    background: #333;
+    color: #EEE;
+}
+
+/* @end Tables */
 
 
 /* @group Section heads */

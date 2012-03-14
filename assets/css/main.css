@@ -98,41 +98,64 @@ code {
 
 /* @end Base styles */
 
-/* @group Prose styles */
+/* @group Article styles */
 
-.prose {
+article {
+	background: #FFF;
+	padding: 20px 25px 15px 25px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #DDD;	
+}
+
+article p:last-child {
+	margin-bottom: 0;
+}
+
+article h2 {
+    font-size: 22px;
+    font-weight: normal;
+	padding: 0.4em 25px;
+    margin: 0 0 15px -30px;
+	color: #FFF;
+	background: #666;
+	display: inline-block;
+	min-width: 35%;
+}
+
+article h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.8em;
+	padding-bottom: 0.4em;
+	border-bottom: 1px dashed #CCC;
+}
+
+article .lede {
+    font-size: 24px;
+    color: #888;
 /*    max-width: 70%;*/
 }
 
-.prose h2 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 0.8em;
-    margin-bottom: 0.8em;
-}
-
-.prose .lede {
-    font-size: 24px;
-    color: #888;
-    max-width: 70%;
-}
-
-.prose .lede em {
+article .lede em {
     font-style: normal;
     color: #555;
 }
 
-.prose li {
+article li {
     margin-bottom: 4px;
     margin-left: 20px;
 }
 
-.prose ul,
-.prose ol {
+article ul,
+article ol {
     margin-bottom: 1.5em;
 }
 
 /* @end Prose styles */
+
+
+
 
 /* @group Buttons */
 
@@ -168,13 +191,11 @@ button {
 /* @group Messages */
 
 .msg {
-    border: 1px solid #DDD;
-    background: #FFF;
-    padding: 10px;
-    margin-bottom: 20px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px
+	background: #FFF;
+	padding: 10px 25px 10px 25px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #DDD;	
 }
 
 .msg p:last-child {
@@ -217,6 +238,7 @@ th {
     overflow: hidden;
     float: left;
     width: 250px;
+	position: fixed;
     margin-left: -250px;
 }
 
@@ -225,7 +247,7 @@ th {
 }
 
 .head {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding: 10px 0 10px 0;
     position: relative;
     border-bottom: 1px solid #CCC;

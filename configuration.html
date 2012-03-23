@@ -11,117 +11,74 @@ title: Configuration
 	
 </div>
 
-<table>
-	<thead>
-	<tr>
-		<th class="name">Name</th>
-		<th class="desc">Description</th>
-		<th class="default">Default</th>
-	</tr>			
-	</thead>
-	<tbody>
-		<tr>
-			<td class="name">login_trigger</td>
-			<td class="desc">The query string key that will trigger a simulated log in. See the <a href="/docs/users.html">Users &amp; Logins</a> section for more information.</td>
-			<td class="default string">login</td>
-		</tr>
-		<tr>
-			<td class="name">logout_trigger</td>
-			<td class="desc">The query string key that will trigger a simulated log out. See the <a href="/docs/users.html">Users &amp; Logins</a> section for more information.</td>
-			<td class="default string">logout</td>
-		</tr>
-		<tr>
-			<td class="name">prefix</td>
-			<td class="desc">The string that will be used as a prefix to namespace cookie names</td>
-			<td class="default string">prontotype-</td>
-		</tr>
-		<tr>
-			<td class="name">cookie_lifetime</td>
-			<td class="desc">How long the cookies set by Prontotype should persist for (in seconds).</td>
-			<td class="default int">604800</td>
-		</tr>
-		<tr>
-			<td class="name">debug</td>
-			<td class="desc">If set to <code>true</code> this will enable some helpful debugging tools in case of problems. See the <a href="/docs/debugging.html">Debugging</a> section for more information.</td>
-			<td class="default boolean">false</td>
-		</tr>
-		<tr>
-			<td class="name">auto_reload</td>
-			<td class="desc"></td>
-			<td class="default boolean">true</td>
-		</tr>
-		<tr>
-			<td class="name">caching</td>
-			<td class="desc"></td>
-			<td class="default boolean">true</td>
-		</tr>
-		<tr>
-			<td class="name">charset</td>
-			<td class="desc"></td>
-			<td class="default string">utf-8</td>
-		</tr>
-		<tr>
-			<td class="name">csv_headers</td>
-			<td class="desc"></td>
-			<td class="default boolean">true</td>
-		</tr>
-		<tr>
-			<td class="name">csv_delimiter</td>
-			<td class="desc"></td>
-			<td class="default string">,</td>
-		</tr>
-		<tr>
-			<td class="name">csv_enclosure</td>
-			<td class="desc"></td>
-			<td class="default string">\"</td>
-		</tr>
-		<tr>
-			<td class="name">csv_escape</td>
-			<td class="desc"></td>
-			<td class="default string">\</td>
-		</tr>
-		<tr>
-			<td class="name">csv_id_header</td>
-			<td class="desc"></td>
-			<td class="default string">id</td>
-		</tr>
-		<tr>
-			<td class="name">homepage_nicename</td>
-			<td class="desc"></td>
-			<td class="default string">Home</td>
-		</tr>
-		<tr>
-			<td class="name">index_nicename</td>
-			<td class="desc"></td>
-			<td class="default string">Overview</td>
-		</tr>
-		<tr>
-			<td class="name">short_url_trigger</td>
-			<td class="desc"></td>
-			<td class="default string">p</td>
-		</tr>
-		<tr>
-			<td class="name">json_data_trigger</td>
-			<td class="desc"></td>
-			<td class="default string">__data</td>
-		</tr>
-		<tr>
-			<td class="name">compiled_css_trigger</td>
-			<td class="desc"></td>
-			<td class="default string">__css</td>
-		</tr>
-		<tr>
-			<td class="name">xhtml_tags</td>
-			<td class="desc"></td>
-			<td class="default boolean">false</td>
-		</tr>
-		<tr>
-			<td class="name">extensions</td>
-			<td class="desc"></td>
-			<td class="default string"></td>
-		</tr>
-	</tbody>
-</table>
+		<code>
+			<pre>
+#==================
+# cache_path
+# -----------------
+# Specify a full server path to a writeable directory to enable caching of templates and data
+#==================
+cache_path: 
+
+#==================
+# authenticate
+# -----------------
+# Provide a username and password pair to enable password-protection of the prototype
+#==================
+authenticate:
+  username: 
+  password:
+
+#==================
+# prefix
+# -----------------
+# The string to use when prefixing cookie names, classes etc.
+#==================
+prefix: prontotype-
+  
+#==================
+# cookie_lifetime
+# -----------------
+# How long cookies set by prontotype should persist for.
+#==================
+cookie_lifetime: 604800 # 1 week
+
+#==================
+# triggers
+# -----------------
+# URL segments that trigger specific behaviour
+#==================
+triggers:
+  login: _login
+  logout: _logout
+  data: _data
+  assets: _assets
+  shorturl: _p
+
+#==================
+# nice_names
+# -----------------
+# A few short text strings that should be used in auto-generated navigation macros
+#==================
+nice_names:
+  index: Overview     # what to label the index pages as
+  home: Home          # what to label the home page as
+
+#==================
+# data
+# -----------------
+# Tweak to match the style of different data files.
+#==================
+data:
+  csv:
+    headers: true
+    delimiter: ','
+    enclosure: '"'
+    escape: '\'
+    id_header: id
+
+			</pre>
+		</code>
 
 
 <p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>

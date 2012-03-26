@@ -13,7 +13,7 @@ title: Structure
 	
 		<p>Pages are just files with a <code>.html</code> extension that reside in the <code>/structure/pages</code> directory.</p>
 	
-		<p>All requests for pages are routed into this directory, which means that (at it's simplest) when Prontotype sees a request for <code>http://example.com/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
+		<p>All requests for pages are routed into this directory, which means that (at it's simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
 	
 		<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
 	
@@ -23,7 +23,7 @@ title: Structure
 	
 	<p>To keep your files ordered nicely in your directories (and to control order that they are output from things like the navigation <a href="/macros-examples">macros</a>), you can also prefix the filename with a number followed by a dash, underscore or full stop (period). This ordering information will not show up in the URL.</p>
 	
-	<p>So using the above example again, but including some ordering information, a file at <code>/site/pages/about/<strong>1-</strong>company.html</code> will still be accessible at <code>http://example.com/about/company</code> and will be the first file in the 'about' section.</p>
+	<p>So using the above example again, but including some ordering information, a file at <code>/site/pages/about/<strong>1-</strong>company.html</code> will still be accessible at <code>http://example.com/index.php/about/company</code> and will be the first file in the 'about' section.</p>
 	
 	<h3>Page IDs</h3>
 	
@@ -31,7 +31,7 @@ title: Structure
 	
 	<p>You can give a page and ID by adding an alphanumeric string (underscores and dashes are ok in there too) surrounded by square brackets into the filename. You can also follow this by a dash, underscore or full stop (period) to help seperate it from the rest of the filename, of you wish.</p>
 	
-	<p>The ID string, like the ordering prefix, will not show up in the URL. So a page at <code>/site/pages/about/<strong>[c123]-</strong>company.html</code> will have a page ID of <code>c123</code> and will be shown at the URL <code>http://example.com/about/company</code></p>
+	<p>The ID string, like the ordering prefix, will not show up in the URL. So a page at <code>/site/pages/about/<strong>[c123]-</strong>company.html</code> will have a page ID of <code>c123</code> and will be shown at the URL <code>http://example.com/index.php/about/company</code></p>
 	
 	<p>Once your page has an ID, you can always print it's current URL into your template by using:</p>
 	
@@ -41,13 +41,22 @@ title: Structure
 	
 	<h3>Bringing it all together</h3>
 	
-	<p>You can of course mix ordering with pages ids - so combining the examples above we would have a page that sits at <code>/site/pages/about/<strong>1-[c123]-</strong>company.html</code> which is found at the URL <code>http://example.com/about/company</code>, is the first page in the 'about' section and has a page ID of <code>c123</code></p>
+	<p>You can of course mix ordering with pages ids - so combining the examples above we would have a page that sits at <code>/site/pages/about/<strong>1-[c123]-</strong>company.html</code> which is found at the URL <code>http://example.com/index.php/about/company</code>, is the first page in the 'about' section and has a page ID of <code>c123</code></p>
 
-		
-		
 		<h3>Customising error pages</h3>
 		
+		
+		
 	</article>
+	
+	<article id="includes">
+		
+		<h2>Includes</h2>
+		
+		<p>Documentation coming soon.</p>	
+		
+	</article>
+	
 
 	<article id="layouts">
 		
@@ -56,6 +65,79 @@ title: Structure
 		<p>Documentation coming soon.</p>	
 		
 	</article>
+	
+	
+	<article id="layouts">
+		
+		<h2>Macros</h2>
+
+		<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
+		
+		<h3>Defining Macros</h3>
+		
+		<p>Documentation coming soon.</p>
+		
+		
+		<h3>Importing Macros</h3>
+		
+		<p>Documentation coming soon.</p>
+		
+
+		<h3>Built in Macros</h3>
+
+		<p>Prontotype also comes with some built-in macros to make it quick to prototype common things like forms, navigation and more.</p>
+		
+		<p>And don't forget, if the markup that these macros output isn't quite to your taste you can easily override them by defining your own macros at any time.</p>
+		
+		
+
+		<!-- <div class="example">
+	
+				<h3 class="title">Example: A simple registration form</h3>
+	
+				<div class="rendered">
+			
+					{{ form.form_open }}
+	
+						{{ form.input('User name') }}
+	
+						{{ form.input('Password', 'password') }}
+	
+						{{ form.textarea('Tell us a little about yourself') }}
+	
+						{{ form.checkbox('I agree to the terms and conditions') }}
+	
+						{{ form.button('Register') }}
+	
+					{{ form.form_close }}
+			
+				</div>
+		
+				<div class="code">
+			<h4>Code:</h4>
+			<pre>
+			{{ form.form_open }}
+	
+			{{ form.input('User name') }}
+	
+			{{ form.input('Password', 'password') }}
+	
+			{{ form.textarea('Tell us a little about yourself') }}
+	
+			{{ form.checkbox('I agree to the terms and conditions') }}
+	
+			{{ form.button('Register') }}
+	
+			{{ form.form_close }}
+			</pre>
+			
+				</div>
+		
+			</div> -->
+		
+		
+	</article>
+	
 	
 	
 </div>

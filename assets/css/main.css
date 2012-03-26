@@ -73,11 +73,19 @@ a:active {
 }
 
 h1 {
-    color: #555;
+    margin-bottom: 15px;
+	margin-top: 35px;
+    position: relative;
+	font-size: 28px;
+	color: #333;
+	font-weight: bold;
+	border-top: 1px dashed #BBB;
+	padding-top: 20px;
 }
 
 p {
     margin: 0 0 1em 0;
+	line-height: 1.5;
 }
 
 em {
@@ -89,11 +97,34 @@ strong {
 }
 
 code {
-    background: #FFF;
-    padding: 1px;
+    background: #FFFEEB;
     font-family: monospace;
-    font-size: 0.9em;
-    color: #777;
+    font-size: 0.85em;
+    color: #3B2300;
+	border-bottom: 1px solid #E6E6B0;
+	border-right: 1px solid #E6E6B0;
+	display: inline-block;
+	padding: 1px 4px;
+}
+
+aside.panel {
+	float: right;
+	padding: 20px;
+	width: 220px;
+	background: #F3F3F3;
+	border-top: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-radius: 5px;
+	text-align: center;
+}
+
+aside.panel p {
+	font-size: 0.90em;
+	color: #666;
+}
+
+aside.panel p a {
+	color: #666;
 }
 
 /* @end Base styles */
@@ -105,7 +136,9 @@ article {
 	padding: 20px 25px 15px 25px;
 	margin-bottom: 20px;
 	border-bottom: 1px solid #DDD;
-	border-right: 1px solid #DDD;	
+	border-right: 1px solid #DDD;
+	overflow: hidden;
+	border-radius: 4px;
 }
 
 article p:last-child {
@@ -113,14 +146,16 @@ article p:last-child {
 }
 
 article h2 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: normal;
-	padding: 0.4em 25px;
-    margin: 0 0 15px -30px;
-	color: #FFF;
-	background: #666;
-	display: inline-block;
+	padding: 0.5em 15px;
+    margin: -5px -10px 15px -10px;
+	color: #222;
+	background: #EEE;
 	min-width: 35%;
+	line-height: 1.0;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #DDD;
 }
 
 article h3 {
@@ -128,7 +163,8 @@ article h3 {
     font-weight: bold;
     margin-bottom: 0.8em;
 	padding-bottom: 0.4em;
-	border-bottom: 1px dashed #CCC;
+	border-bottom: 1px solid #DDD;
+	margin-top: 1.2em;
 }
 
 article .lede {
@@ -244,17 +280,6 @@ th {
 
 #header .inner {
     padding: 20px;
-}
-
-.head {
-    margin-bottom: 20px;
-    padding: 10px 0 10px 0;
-    position: relative;
-    border-bottom: 1px solid #CCC;
-}
-
-.head .title {
-    font-size: 28px;
 }
 
 /* @end Section heads */

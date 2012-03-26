@@ -3,17 +3,18 @@ layout: default
 title: Overview
 ---
 
-<div class="prose">
+<article>
 	
-	<div class="msg">
-		<p>Please note that Prontotype is current under active development and should not be considered stable until it reaches a 1.0 release.</p>
-	</div>
+	<aside class="panel">
+		
+		<a href="https://github.com/allmarkedup/prontotype/zipball/master" class="button download">Download Prontotype &darr;</a>
+		
+		<p>Or check out the <a href="https://github.com/allmarkedup/prontotype">Github repo</a> &rarr;</p>
+	
+	</aside>
+	
 	
 	<p class="lede"><em>Prontotype</em> is a lightweight, server-side framework to help you quickly build interactive, data-driven HTML prototypes.</p>
-	
-	<a href="https://github.com/allmarkedup/prontotype/zipball/master" class="button download">Download Prontotype &rarr;</a>
-	
-	<h2>Prontotype lets you:</h2>
 	
 	<ul>
 		<li>Quickly build linked, multi-page prototypes with 'realistic' URLs</li>
@@ -22,11 +23,25 @@ title: Overview
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
 		<li>Add contextual notes to pages and content blocks that you can easily show/hide</li>
 		<li>Use YAML or CSV files to define data structures that will be accessible throughout your prototype</li>
+		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
-		<li>And plenty more&hellip;</li>
+		<li>And plenty more!</li>
 	</ul>
+
+		
+</article>
 	
-	<h2>What you'll need to run Prontotype:</h2>
+<div class="msg">
+	<p>Please note that Prontotype is current under active development and should not be considered stable until it reaches a 1.0 release.</p>
+</div>
+	
+<h1>Getting Started</h1>
+	
+<article>
+		
+	<h2>Initial Setup</h2>
+	
+	<h3 id="requirements">Requirements</h3>
 	
 	<ul>
 		<li>Linux-based web server</li>
@@ -34,4 +49,214 @@ title: Overview
 		<li>PHP version 5.3.1+</li>
 	</ul>
 	
-</div>
+	<h3 id="installation">Download and Installation</h3>
+	
+	<ol>
+		<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download</a> and unzip the latest version (or clone it from the <a href="https://github.com/allmarkedup/prontotype">Github repo</a>).</li>
+		<li>Move the files to the web root of your server</li>
+		<li>That's it!</li>
+	</ol>
+	
+	<h3 id="clean-urls">Clean URLs</h3>
+	
+	<p>By default, Prontotype URLs contain 'index.php' in them. If you want to remove this to make the URLs a bit prettier, then it's pretty straightforward to do so. The example below assumes you are using Apache to serve up your prototype:</p>
+	
+	<ol>
+		<li>Change the filename of the supplied `htaccess.txt` file to `.htaccess` (Note this may make it an 'invisible' file, depending on your OS).</li>
+		<li>Open the config.yml file in the root of your install and set the 'index' configuration option to an empty string (i.e. delete the default value of 'index.php')</li>
+		<li>You should now have URLs without the ugly 'index.php' bit in them.</li>
+	</ol>
+		
+</article>
+
+<article>
+		
+	<h2 id="directory-structure">The Prontotype directory structure</h2>
+	
+	<p>Before diving in and creating some pages, it's worthwhile getting aquainted with the directory structure Prototype uses.</p>
+	
+	<ul class="filetree">
+		<li class="dir"><strong>app</strong> - The application code. You shouldn't need to touch this.</li>
+		<li class="dir"><strong>data</strong> - Contains files of structured data that will be made accessible to your templates.</li>
+		<li class="dir"><strong>structure</strong> - Contains the pages, layouts, and macros that define your prototype.
+			<ul>
+				<li class="dir"><strong>includes</strong> - Your template partials</li>
+				<li class="dir"><strong>layouts</strong> - Your page layouts</li>
+				<li class="dir"><strong>macros</strong> - Your helper macros</li>
+				<li class="dir"><strong>pages</strong> - Your page structure</li>
+			</ul>
+		</li>
+		<li class="file"><strong>config.yml</strong> - A YAML configuration file.</li>
+		<li class="file"><strong>htaccess.txt</strong> - Sample .htaccess configuration file. See the <a href="#clean-urls">section on enabling 'clean' URLs</a>.</li>
+		<li class="file"><strong>index.php</strong> - The application bootstrap file.</li>
+	</ul>
+			
+</article>
+
+<h1>Structuring your Prototype</h1>
+	
+<article id="pages">
+		
+	<h2>Pages</h2>
+	
+	<p>Pages are just files with a <code>.html</code> extension that reside in the <code>/structure/pages</code> directory.</p>
+	
+	<p>All requests for pages are routed into this directory, which means that (at it's simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
+	
+	<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
+	
+	<p>However&hellip; files in the pages directory are also <strong>parsed as Twig templates</strong>. That means you can use a <a href="/docs/template-tags.html">whole bunch of template tags</a> within them to give you access to data, include other files, inherit layouts and more.</p>
+		
+	<h3>Ordering pages</h3>
+	
+	<p>To keep your files ordered nicely in your directories (and to control order that they are output from things like the navigation <a href="/macros-examples">macros</a>), you can also prefix the filename with a <strong>number</strong>, followed by a <strong>dash, underscore or full stop</strong> (period). This ordering information will not show up in the URL.</p>
+	
+	<p>So using the above example again, but including some ordering information, a file at <code>/site/pages/about/<strong>1-</strong>company.html</code> will still be accessible at <code>http://example.com/index.php/about/company</code> and will be the first file in the 'about' section.</p>
+	
+	<h3>Page IDs</h3>
+	
+	<p>Lastly, you can give pages unique IDs, and use these to build links to pages so that if you move the pages around (which happens a lot when prototyping!) you won't have to update all your links.</p>
+	
+	<p>You can give a page and ID by adding an <strong>alphanumeric string</strong> (underscores and dashes are ok in there too) <strong>surrounded by square brackets</strong> into the filename. You can also follow this by a <strong>dash, underscore or full stop</strong> (period) to help seperate it from the rest of the filename, of you wish.</p>
+	
+	<p>The ID string, like the ordering prefix, will not show up in the URL. So a page at <code>/site/pages/about/<strong>[c123]-</strong>company.html</code> will have a page ID of <code>c123</code> and will be shown at the URL <code>http://example.com/index.php/about/company</code></p>
+	
+	<p>Once your page has an ID, you can always print it's URL into your template by using:</p>
+	
+	<p><code>{% raw %}{{ pages.link('PAGE-ID') }}{% endraw %}</code></p>
+	
+	<p>Where <code>PAGE-ID</code> is the ID of the page you are interested in.</p>
+	
+	<h3>Bringing it all together</h3>
+	
+	<p>You can of course mix ordering with pages ids - so combining the examples above we would have a page that sits at <code>/site/pages/about/<strong>1-[c123]-</strong>company.html</code> which is found at the URL <code>http://example.com/index.php/about/company</code>, is the first page in the 'about' section and has a page ID of <code>c123</code></p>
+		
+</article>
+	
+<article id="includes">
+		
+	<h2>Includes</h2>
+		
+	<p>Documentation coming soon.</p>	
+		
+</article>
+	
+
+<article id="layouts">
+		
+	<h2>Layouts</h2>
+		
+	<p>Documentation coming soon.</p>	
+		
+</article>
+	
+	
+<article id="layouts">
+		
+	<h2>Macros</h2>
+
+	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
+		
+	<h3>Defining Macros</h3>
+		
+	<p>Documentation coming soon.</p>
+		
+		
+	<h3>Importing Macros</h3>
+		
+	<p>Documentation coming soon.</p>
+		
+
+	<h3>Built in Macros</h3>
+	
+	<p>Documentation coming soon.</p>
+
+	<!-- <p>Prontotype also comes with some built-in macros to make it quick to prototype common things like forms, navigation and more.</p>
+		
+	<p>And don't forget, if the markup that these macros output isn't quite to your taste you can easily override them by defining your own macros at any time.</p> -->
+		
+		
+
+<!-- <div class="example">
+	
+		<h3 class="title">Example: A simple registration form</h3>
+	
+		<div class="rendered">
+			
+			{{ form.form_open }}
+	
+				{{ form.input('User name') }}
+	
+				{{ form.input('Password', 'password') }}
+	
+				{{ form.textarea('Tell us a little about yourself') }}
+	
+				{{ form.checkbox('I agree to the terms and conditions') }}
+	
+				{{ form.button('Register') }}
+	
+			{{ form.form_close }}
+			
+		</div>
+		
+		<div class="code">
+	<h4>Code:</h4>
+	<pre>
+	{{ form.form_open }}
+	
+	{{ form.input('User name') }}
+	
+	{{ form.input('Password', 'password') }}
+	
+	{{ form.textarea('Tell us a little about yourself') }}
+	
+	{{ form.checkbox('I agree to the terms and conditions') }}
+	
+	{{ form.button('Register') }}
+	
+	{{ form.form_close }}
+	</pre>
+			
+		</div>
+		
+	</div> -->
+		
+		
+</article>
+
+<article>
+	
+	<h2>Overriding default system pages</h2>
+	
+	<p>Prontotype uses a number of 'default' pages and layouts for use when it can't find the page you are looking for (or a mistake in your template causes a problem!). If you want to customise these pages to better match the style of your prototype, then you can easily override them by taking the following steps:</p>
+	
+	<ol>
+		<li>Create a <code>PT</code> directory within your <code>/structure</code> folder.</li>
+		<li>Create a new file with the same name as the one you are trying to override. The following pages are supplied by the system:</li>
+	</ol>	
+	
+	<h3>Pages</h3>
+	
+	<ul>
+		<li><strong>/pages/404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
+		<li><strong>/pages/error.html</strong> - Displayed when an application or template error occurs.</li>
+		<li><strong>/pages/authenticate.html</strong> - If requiring authentication to view your prototype, this is the form page that is shown for people to log in on. Obviously you need to preserve the form itself if you replace this file!</li>
+	</ul>
+	
+	<h3>Layouts</h3>
+	
+	<ul>
+		<li><strong>404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
+	</ul>
+	
+	<h3>Macros</h3>
+	
+	<ul>
+		<li><strong>404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
+	</ul>
+	
+	
+</article>
+
+<h1>Adding Functionality</h1>
+

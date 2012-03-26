@@ -8,9 +8,16 @@ title: Configuration
 	<p>Prontotype's default configuration should probably be just fine for you. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
 
 	<p>Here's a brief overview of the settings, what they do and their default values:</p>
-		
-	<code>
-		<pre>
+	
+		<code>
+			<pre>
+#==================
+# index
+# -----------------
+# Set to an empty string if using mod_rewrite or the nginx equivalent
+#==================
+index: index.php
+				
 #==================
 # cache_path
 # -----------------
@@ -75,9 +82,10 @@ data:
     escape: '\'
     id_header: id
 
-		</pre>
-	</code>
+			</pre>
+		</code>
 
-	<p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>
+
+<p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>
 
 </article>

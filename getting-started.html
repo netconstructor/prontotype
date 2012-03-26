@@ -3,70 +3,8 @@ layout: default
 title: Getting Started
 ---
 
-<div class="prose">
 	
-	<div class="msg">
-		<p>Prontotype makes use of <a href="http://twig.sensiolabs.org/">Twig</a> to power it's templates and <a href="http://yaml.org/start.html">YAML</a> as a way to store structured data in text files. It's highly recommended to familiarise yourself with them before starting as understanding them well will mean you can really get the most out of Prontotype.</p>
-	</div>
-	
-	<article id="installation">
-		
-		<h2>Download and installation</h2>
-	
-		<ol>
-			<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download</a> and unzip the latest version (or clone it from the <a href="https://github.com/allmarkedup/prontotype">Github repo</a>).</li>
-			<li>Move the files to the web root of your server</li>
-			<li>Configure your web server of choice to route all requests though the `index.php` file (details for Apache and Nginx below)</li>
-		</ol>
-	
-		<h3 id="setup-apache">Apache Setup</h3>
-	
-		<p>Simply change the filename of the supplied `htaccess.txt` file to `.htaccess` to route all requests through the index file. (Note this may make it an 'invisible' file, depending on your OS).</p>
-	
-		<h3 id="setup-nginx">Nginx Setup</h3>
-	
-		<code>
-			<pre>
-server
-{
-    listen 80;
-    server_name prototype-name.dev;
-    root /path/to/prontotype;
-
-    location /
-    {
-        index index.php index.html;
-		if (!-f $request_filename)
-		{
-			rewrite ^/(.*)$ /index.php?/$1 last;
-		}
-    }
-}
-			</pre>
-		</code>
-		
-	</article>
-	
-	<article id="structure">
-		
-		<h2>The Prontotype directory structure</h2>
-	
-		<p>Before diving in and creating some pages, it's worthwhile getting aquainted with the directory structure Prototype uses.</p>
-	
-		<ul class="filetree">
-			<li class="dir"><strong>app</strong> - The application code. You shouldn't need to touch this.</li>
-			<li class="dir"><strong>data</strong> - Contains files of structured data that will be made accessible to your templates.</li>
-			<li class="dir"><strong>extensions</strong> - Extensions allow you to run code to customisethe behaviour of the prototype.</li>
-			<li class="dir"><strong>structure</strong> - Contains the pages, layouts, and macros that define your prototype.</li>
-			<li class="file"><strong>config.yml</strong> - A YAML file containing any required overrides to the default configuration.</li>
-			<li class="file"><strong>htaccess.txt</strong> - Sample .htaccess configuration file. If using Apache, this will need renaming <a href="#setup-apache">as described above</a>.</li>
-			<li class="file"><strong>index.php</strong> - The bootstrap file that all requests need be run through.</li>
-		</ul>
-			
-	</article>
 
 
-	<p class="next-step"><a href="#">Structure</a></p>
-	
-	
-</div>
+
+

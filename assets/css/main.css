@@ -96,35 +96,15 @@ strong {
     font-weight: bold;
 }
 
-code {
-    background: #FFFEEB;
-    font-family: monospace;
-    font-size: 0.85em;
-    color: #3B2300;
-	border-bottom: 1px solid #E6E6B0;
-	border-right: 1px solid #E6E6B0;
-	display: inline-block;
-	padding: 1px 4px;
+.note {
+	color: #777;
+	font-size: 13px;
+	font-style: italic;
 }
 
-aside.panel {
-	float: right;
-	padding: 20px;
-	width: 220px;
-	background: #F3F3F3;
-	border-top: 1px solid #DDD;
-	border-left: 1px solid #DDD;
-	border-radius: 5px;
-	text-align: center;
-}
-
-aside.panel p {
-	font-size: 0.90em;
-	color: #666;
-}
-
-aside.panel p a {
-	color: #666;
+pre + .note {
+	margin-top: -8px;
+	margin-bottom: 20px;
 }
 
 /* @end Base styles */
@@ -167,10 +147,24 @@ article h3 {
 	margin-top: 1.2em;
 }
 
+article h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0.6em;
+	margin-top: 1.0em;
+	color: #444;
+}
+
+article h4 code {
+	font-weight: normal;
+	float: right;
+	position: relative;
+	top: -3px;
+}
+
 article .lede {
     font-size: 24px;
     color: #888;
-/*    max-width: 70%;*/
 }
 
 article .lede em {
@@ -188,10 +182,33 @@ article ol {
     margin-bottom: 1.5em;
 }
 
-/* @end Prose styles */
+/* @end article styles */
 
+/* @start aside styles */
 
+aside.panel {
+	float: right;
+	padding: 20px;
+	width: 220px;
+	background: #F3F3F3;
+	border-top: 1px solid #DDD;
+	border-left: 1px solid #DDD;
+	border-radius: 5px;
+	text-align: center;
+	margin-left: 30px;
+	margin-bottom: 10px;
+}
 
+aside.panel p {
+	font-size: 0.90em;
+	color: #666;
+}
+
+aside.panel p a {
+	color: #666;
+}
+
+/* @end aside styles */
 
 /* @group Buttons */
 
@@ -287,12 +304,12 @@ th {
 /* @group Navigation */
 
 .nav {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .nav li {
-    margin-bottom: 10px;
-    line-height: 1.0;
+    margin-bottom: 12px;
+    line-height: 1.2;
     list-style: none;
 }
 
@@ -308,7 +325,11 @@ th {
 }
 
 .nav li ul {
-    padding: 18px 0 1px 10px;
+    padding: 10px 0 1px 0;
+}
+
+.nav li li {
+    margin-bottom: 4px;
 }
 
 .nav li li a {
@@ -322,15 +343,15 @@ th {
 
 #header .branding {
     text-decoration: none;
-    color: #DDD;
+    color: #EEE;
     font-size: 28px;
     display: inline-block;
     font-weight: bold;
+	margin-bottom: 30px;
 }
 
 #header .head {
-    border-color: #333;
-    padding: 10px 20px 10px 20px;
+    padding: 13px 10px 0 10px;
 }
 
 /* @end Header */
@@ -340,6 +361,7 @@ th {
 #content {
     float: left;
     width: 100%;
+	max-width: 1100px;
 }
 
 #content .inner {
@@ -347,3 +369,93 @@ th {
 }
 
 /* @end Content */
+
+/* @group Code */
+
+code {
+	font-family: "Lucida Console", "Monaco", monospace;
+}
+ 
+p code,
+li code,
+h4 code {
+    background: #FFFEEB;
+    font-family: monospace;
+    font-size: 0.85em;
+    color: #3B2300;
+	border-bottom: 1px solid #E6E6B0;
+	border-right: 1px solid #E6E6B0;
+	display: inline-block;
+	padding: 1px 4px;
+}
+
+pre code {
+	box-sizing: border-box;
+	padding: 20px;
+	margin-bottom: 20px;
+	display: block;
+}
+
+pre code strong {
+	color: #D623A2;
+	font-weight: normal;
+}
+
+pre code {
+	color: #777;
+	font-size: 13px;
+	background: #FAfAfA;
+	line-height: 18px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	word-wrap: break-word;
+	margin-bottom: 15px;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;	 
+}
+
+.comment {
+	color: #888;
+}
+
+.meta {
+	color: #f03200;
+}
+
+.support {
+	color: #3399CC;
+}
+
+.string {
+	color: #006600;
+}
+
+.support.attribute,
+/*.support.tag-name,*/
+.support.css-property,
+.support.regex.modifier {
+	color: #1E658A;
+}
+
+.support.value {
+	color: #006600;
+}
+
+.integer, .constant {
+	color: #d8fa3c;
+}
+
+.keyword, .selector {
+	color: #fbde2d;
+}
+
+.regex.open, .regex.close, .constant.regex {
+	color: #fff;
+}
+
+.constant.regex.escape {
+	color: #d8fa3c;
+}
+
+/* @end Code */

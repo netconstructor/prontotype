@@ -3,7 +3,7 @@ layout: default
 title: Overview
 ---
 
-<article>
+<article id="overview">
 	
 	<aside class="panel">
 		
@@ -13,31 +13,31 @@ title: Overview
 	
 	</aside>
 	
-	
 	<p class="lede"><em>Prontotype</em> is a lightweight, server-side framework to help you quickly build interactive, data-driven HTML prototypes.</p>
 	
 	<ul>
-		<li>Quickly build linked, multi-page prototypes with 'realistic' URLs</li>
+		<li>Quickly build linked, multi-page prototypes with realistic URLs</li>
 		<li>Define reusable chunks of HTML to make prototype-wide updates quick and easy</li>
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
 		<li>Add contextual notes to pages and content blocks that you can easily show/hide</li>
 		<li>Use YAML or CSV files to define data structures that will be accessible throughout your prototype</li>
+		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
+		<li>Auto-generate navigation, forms and more using inbuilt macros</li>
 		<li>And plenty more!</li>
 	</ul>
 
-		
 </article>
 	
 <div class="msg">
 	<p>Please note that Prontotype is current under active development and should not be considered stable until it reaches a 1.0 release.</p>
 </div>
 	
-<h1>Getting Started</h1>
+<h1 id="getting-started">Getting Started</h1>
 	
-<article>
+<article id="setup">
 		
 	<h2>Initial Setup</h2>
 	
@@ -45,7 +45,7 @@ title: Overview
 	
 	<ul>
 		<li>Linux-based web server</li>
-		<li>Nginx or Apache with mod_rewrite enabled</li>
+		<li>A web server like Nginx or Apache (optionally with mod_rewrite or equivalent enabled)</li>
 		<li>PHP version 5.3.1+</li>
 	</ul>
 	
@@ -54,7 +54,8 @@ title: Overview
 	<ol>
 		<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download</a> and unzip the latest version (or clone it from the <a href="https://github.com/allmarkedup/prontotype">Github repo</a>).</li>
 		<li>Move the files to the web root of your server</li>
-		<li>That's it!</li>
+		<li>Oprionally tweak some of the <a href="#configuration">default configuration settings</a> (but you probably don't need to!)</li>
+		<li>That's it :-)</li>
 	</ol>
 	
 	<h3 id="clean-urls">Clean URLs</h3>
@@ -69,9 +70,9 @@ title: Overview
 		
 </article>
 
-<article>
+<article id="directory-structure">
 		
-	<h2 id="directory-structure">The Prontotype directory structure</h2>
+	<h2>The Prontotype directory structure</h2>
 	
 	<p>Before diving in and creating some pages, it's worthwhile getting aquainted with the directory structure Prototype uses.</p>
 	
@@ -80,9 +81,6 @@ title: Overview
 		<li class="dir"><strong>data</strong> - Contains files of structured data that will be made accessible to your templates.</li>
 		<li class="dir"><strong>structure</strong> - Contains the pages, layouts, and macros that define your prototype.
 			<ul>
-				<li class="dir"><strong>includes</strong> - Your template partials</li>
-				<li class="dir"><strong>layouts</strong> - Your page layouts</li>
-				<li class="dir"><strong>macros</strong> - Your helper macros</li>
 				<li class="dir"><strong>pages</strong> - Your page structure</li>
 			</ul>
 		</li>
@@ -93,7 +91,7 @@ title: Overview
 			
 </article>
 
-<h1>Structuring your Prototype</h1>
+<h1 id="structure">Structuring your Prototype</h1>
 	
 <article id="pages">
 		
@@ -105,54 +103,162 @@ title: Overview
 	
 	<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
 	
-	<p>However&hellip; files in the pages directory are also <strong>parsed as Twig templates</strong>. That means you can use a <a href="/docs/template-tags.html">whole bunch of template tags</a> within them to give you access to data, include other files, inherit layouts and more.</p>
+	<p>However&hellip; files in the pages directory are also <strong>parsed as Twig templates</strong>. That means you can use a <a href="#tag-ref">whole bunch of template tags</a> within them to give you access to data, include other files, inherit layouts and more.</p>
 		
-	<h3>Ordering pages</h3>
+	<h3 id="page-ordering">Ordering pages <em>(optional)</em></h3>
 	
-	<p>To keep your files ordered nicely in your directories (and to control order that they are output from things like the navigation <a href="/macros-examples">macros</a>), you can also prefix the filename with a <strong>number</strong>, followed by a <strong>dash, underscore or full stop</strong> (period). This ordering information will not show up in the URL.</p>
+	<p>To keep your files ordered nicely in your directories (and to control order that they are output from things like the navigation <a href="#macro-ref">macros</a>), you can also prefix the filename with a <strong>number</strong>, followed by a <strong>dash, underscore or full stop</strong> (period). This ordering information will not show up in the URL.</p>
 	
-	<p>So using the above example again, but including some ordering information, a file at <code>/site/pages/about/<strong>1-</strong>company.html</code> will still be accessible at <code>http://example.com/index.php/about/company</code> and will be the first file in the 'about' section.</p>
+	<p>For example:</p>
 	
-	<h3>Page IDs</h3>
+<pre><code>/site/pages/about/<strong>1-</strong>company.html  ==>	http://example.com/index.php/about/company
+		
+/site/pages/contact/<strong>3-</strong>sales.html  ==>	http://example.com/index.php/contact/sales
+</code></pre>
+	
+	<h3 id="page-ids">Page IDs <em>(optional)</em></h3>
 	
 	<p>Lastly, you can give pages unique IDs, and use these to build links to pages so that if you move the pages around (which happens a lot when prototyping!) you won't have to update all your links.</p>
 	
-	<p>You can give a page and ID by adding an <strong>alphanumeric string</strong> (underscores and dashes are ok in there too) <strong>surrounded by square brackets</strong> into the filename. You can also follow this by a <strong>dash, underscore or full stop</strong> (period) to help seperate it from the rest of the filename, of you wish.</p>
+	<p>You can give a page an ID by adding an <strong>alphanumeric string</strong> (underscores and dashes are ok in there too) <strong>surrounded by square brackets</strong> into the filename. You can also follow this by a <strong>dash, underscore or full stop</strong> (period) to help seperate it from the rest of the filename, if you wish.</p>
 	
-	<p>The ID string, like the ordering prefix, will not show up in the URL. So a page at <code>/site/pages/about/<strong>[c123]-</strong>company.html</code> will have a page ID of <code>c123</code> and will be shown at the URL <code>http://example.com/index.php/about/company</code></p>
+	<p>The ID string, like the ordering prefix, will not show up in the URL. So for example:</p>
+
+	<p>For example:</p>
 	
-	<p>Once your page has an ID, you can always print it's URL into your template by using:</p>
+<pre><code>/site/pages/about/<strong>[c123]-</strong>company.html	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
+		
+/site/pages/contact/<strong>[spg]-</strong>sales.html	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
+</code></pre>
 	
-	<p><code>{% raw %}{{ pages.link('PAGE-ID') }}{% endraw %}</code></p>
+	<p>Once your page has an ID, you can always <strong>print it's URL into your template</strong> by using:</p>
+	
+	<pre><code><strong>{{ pages.link('PAGE-ID') }}</strong></code></pre>
 	
 	<p>Where <code>PAGE-ID</code> is the ID of the page you are interested in.</p>
 	
 	<h3>Bringing it all together</h3>
 	
-	<p>You can of course mix ordering with pages ids - so combining the examples above we would have a page that sits at <code>/site/pages/about/<strong>1-[c123]-</strong>company.html</code> which is found at the URL <code>http://example.com/index.php/about/company</code>, is the first page in the 'about' section and has a page ID of <code>c123</code></p>
+	<p>You can of course mix ordering with pages ids - so combining the examples above we would have:<p>
+		
+<pre><code>/site/pages/about/<strong>1-[c123]-</strong>company.html	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
+		
+/site/pages/contact/<strong>3-[spg]-</strong>sales.html	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
+</code></pre>
+
+<p>This allows you to have page IDs for the pages that need them and still keep your pages ordered correctly within your site.</p>
 		
 </article>
-	
-<article id="includes">
-		
-	<h2>Includes</h2>
-		
-	<p>Documentation coming soon.</p>	
-		
-</article>
-	
+
 
 <article id="layouts">
 		
 	<h2>Layouts</h2>
 		
-	<p>Documentation coming soon.</p>	
+	<p>Prontotype uses <a href="http://twig.sensiolabs.org/">Twig</a> for it's templates, which allows it to support a powerful <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance</a> model. This means that you can define <strong>shared layouts</strong> that have <strong>placeholders for 'blocks' of content</strong> in them. Your pages can then be set up to 'inherit' a layout, so they only need to specify the content to be placed into the placeholder area.</p>
+	
+	<p>By convention, layouts for your prototype should be stored in a folder called '<strong>layouts</strong>' within your <code>/structure</code> directory. You will have to create this folder if you opt to use layouts in your prototype.</p>
+	
+	<p>You can specify which template your page should extend by using the <code>{% extends %}</code> tag. Below is an example of how this works - note that the path you provide should be <strong>relative to the <code>/structure</code> directory</strong>.</p>
+	
+	<h3>An example of using a layout:</h3>
+	
+	<h4><strong>Layout file:</strong> <code>/structure/layouts/example-layout.html</code></h4>
+	
+<pre><code data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Prontotype Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;div class=&quot;header&quot;&gt;
+    &lt;h1&gt;Prontotype&lt;/h1&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;content&quot;&gt;
+
+  <strong>{% block content %}</strong>
+	
+  &lt;p&gt;Default content&lt;/p&gt;
+		
+  <strong>{% endblock content %}</strong>
+
+  &lt;/div&gt;
+
+  &lt;div class=&quot;footer&quot;&gt;
+    &lt;p&gt;Powered by Prontotype.&lt;/p&gt;
+  &lt;/div&gt;
+
+&lt;/body&gt;	
+&lt;/html&gt;
+</code></pre>
+	
+	
+	<p class="note">Note the area delinated with the block/endblock named tags - this is the placeholder section that your page content will be dropped into. Any text between these tags will be used as default content if you do not provide content for that area in your page file.</p>
+	
+	<h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.html</code> </h4>
+	
+	
+<pre><code data-language="html"><strong>{% extends &quot;layouts/example-layout.html&quot; %}</strong>
+
+<strong>{% block content %}</strong>
+
+&lt;h1&gt;Content goes here&lt;/h1&gt;
+&lt;p&gt;This is some example content&lt;/p&gt;
+
+<strong>{% endblock content %}</strong>
+</code></pre>
+	
+	
+	<p>You can read more about <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance on the Twig website</a>. It's a really powerful concept that can really speed up updating your prototype so it's worth getting to grips with!</p>	
 		
 </article>
+
 	
-	
-<article id="layouts">
+<article id="includes">
 		
+	<h2>Includes</h2>
+		
+	<p>Includes are HTML files that contain reusable snippets of code or content, and that can be pulled in and included anywhere on your site. They are parsed as Twig templates so can use any of the available template tags within them.</p>
+	
+	<p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{% include %}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.html</code> you could do this:</p>
+	
+<pre><code data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;Prontotype Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  <strong>{% include "includes/header.html" %}</strong>
+
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;p&gt;Some content&lt;/p&gt;
+  &lt;/div&gt;
+
+&lt;/body&gt;	
+&lt;/html&gt;
+</code></pre>
+	
+	<p>Note that like the <a href="#layouts">extends</a> tag, the path you provide should be relative to the <code>/structure</code> directory.</p>
+	
+</article>
+
+
+<h1 id="functionality">Functionality</h1>
+
+<article id="assets">
+	<h2>Assets</h2>
+
+	<p>Documentation coming soon.</p>
+	
+</article>
+
+<article id="macros">
+	
 	<h2>Macros</h2>
 
 	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
@@ -224,39 +330,186 @@ title: Overview
 		
 </article>
 
+<article id="data">
+	<h2>Providing Data</h2>
+	<p>Documentation coming soon.</p>
+</article>
+
+<article id="users">
+	<h2>Users and Logins</h2>
+	<p>Documentation coming soon.</p>
+</article>
+
+<article id="notes">
+	<h2>Notes</h2>
+	<p>Documentation coming soon.</p>
+</article>
+
+<article id="toolbar">
+	<h2>The Prontotype Toolbar</h2>
+	<p>Documentation coming soon.</p>
+</article>
+
+<article id="authentication">
+	<h2>Password-protecting your Prototype</h2>
+	
+	<p>If your prototype is accessible via the internet, then often you'll want to limit access to a select group of people. Prontotype makes this easy to do - all you need to do is add a <strong>username</strong> and <strong>password</strong> into your <code>config.yml</code> file, under <strong>authentication</strong> heading.</p>
+	
+	<p>So the appropriate section of your configuration file may look like this:</p>
+	
+<pre><code class="snippet" data-language="shell">...
+
+<strong>authenticate:</strong>
+  <strong>username:</strong> bob
+  <strong>password:</strong> bu1ld3r
+	  
+...</code></pre>
+	
+	<p>When people then try to access the prototype they will be redirected to a login page, where they will need to enter these details in order to gain access to the site.</p>
+	
+</article>
+
+<article id="short-urls">
+	
+	<h2>Short URLs</h2>
+	
+	<p>Any pages that you have <a href="#page-ids">assigned an ID to</a> can be linked to via a short URL. The short URLs will take the following form:</p>
+	
+	<pre><code>http://example.com/<strong>&lt;shorturl_trigger&gt;</strong>/<strong>&lt;page_id&gt;</strong></code></pre>
+	
+	<p>Where <code>&lt;shorturl_trigger&gt;</code> is as defined in your config file (defaults to <code>_p</code>) and <code>&lt;page_id&gt;</code>  is the ID you've given to your page.</p>
+	
+	<p>So (using the default configuration settings) a short url to the page at <code>/structure/pages/about/<strong>[comp]-</strong>company.html</code> would be http://example.com/index.php/_p/comp</p>
+	
+	<p>Sharing these short links as opposed to the full page URLs is useful because even if you move the page around while the prototype is being constructed, <strong>the short URL will always route to the correct page</strong>. And obviously the links are shorter and so (probably!) easier to remember.</p>
+	
+	<p>Don't forget your URLs will be even shorter if you use an <code>.htaccess</code> file to <a href="#clean-urls">enable clean URLs</a> and remave the <code>index.php</code> from the URL.</p>
+		
+</article>
+
+<h1 id="configuration">Configuration</h1>
+
 <article>
+		
+	<p>Prontotype's default configuration should probably be just fine for you. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
+
+	<p>Here's a brief overview of the settings, what they do and their default values:</p>
+	
+<pre><code class="snippet" data-language="shell">#==================
+# index
+# -----------------
+# Set to an empty string if using mod_rewrite or the nginx equivalent
+#==================
+<strong>index:</strong> index.php
+
+#==================
+# authenticate
+# -----------------
+# Provide a username and password pair to enable password-protection of the prototype
+#==================
+<strong>authenticate:
+  username: 
+  password:</strong>
+
+#==================
+# prefix
+# -----------------
+# The string to use when prefixing cookie names, classes etc.
+#==================
+<strong>prefix:</strong> prontotype-
+  
+#==================
+# cookie_lifetime
+# -----------------
+# How long cookies set by prontotype should persist for.
+#==================
+<strong>cookie_lifetime:</strong> 604800 # 1 week
+
+#==================
+# triggers
+# -----------------
+# URL segments that trigger specific behaviour
+#==================
+<strong>triggers:</strong>
+  <strong>login:</strong> _login
+  <strong>logout:</strong> _logout
+  <strong>data:</strong> _data
+  <strong>assets:</strong> _assets
+  <strong>shorturl:</strong> _p
+
+#==================
+# nice_names
+# -----------------
+# A few short text strings that should be used in auto-generated navigation macros
+#==================
+<strong>nice_names:</strong>
+  <strong>index:</strong> Overview     # what to label the index pages as
+  <strong>home: </strong>Home          # what to label the home page as
+
+#==================
+# data
+# -----------------
+# Tweak to match the style of different data files.
+#==================
+<strong>data:</strong>
+  <strong>csv:</strong>
+    <strong>headers:</strong> true
+    <strong>delimiter:</strong> ','
+    <strong>enclosure:</strong> '"'
+    <strong>escape:</strong> '\'
+    <strong>id_header:</strong> id
+</code></pre>
+
+<p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>
+
+</article>
+
+<h1 id="cookbook">Cookbook</h1>
+
+<article id="overriding-defaults">
 	
 	<h2>Overriding default system pages</h2>
 	
 	<p>Prontotype uses a number of 'default' pages and layouts for use when it can't find the page you are looking for (or a mistake in your template causes a problem!). If you want to customise these pages to better match the style of your prototype, then you can easily override them by taking the following steps:</p>
 	
 	<ol>
-		<li>Create a <code>PT</code> directory within your <code>/structure</code> folder.</li>
-		<li>Create a new file with the same name as the one you are trying to override. The following pages are supplied by the system:</li>
-	</ol>	
+		<li><strong>Copy</strong> (not move!) the <code>/app/views/PT</code> folder into your <code>/structure</code> directory.</li>
+		<li>Edit the newly copied files that now live in <code>/structure/PT/pages</code> and <code>/structure/PT/layouts</code> to your liking.</li>
+	</ol>
+	
+	<p>The pages and layouts that you'll find in there are listed below.</p>
 	
 	<h3>Pages</h3>
 	
 	<ul>
-		<li><strong>/pages/404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
-		<li><strong>/pages/error.html</strong> - Displayed when an application or template error occurs.</li>
-		<li><strong>/pages/authenticate.html</strong> - If requiring authentication to view your prototype, this is the form page that is shown for people to log in on. Obviously you need to preserve the form itself if you replace this file!</li>
+		<li class="file"><strong>/pages/404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
+		<li class="file"><strong>/pages/error.html</strong> - Displayed when an application or template error occurs.</li>
+		<li class="file"><strong>/pages/authenticate.html</strong> - If requiring authentication to view your prototype, this is the form page that is shown for people to log in on. Obviously you need to preserve the form itself if you replace this file!</li>
 	</ul>
 	
 	<h3>Layouts</h3>
 	
 	<ul>
-		<li><strong>404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
+		<li class="file"><strong>/layouts/system.html</strong> - The layout that all the system pages inherit from by default.</li>
 	</ul>
 	
 	<h3>Macros</h3>
 	
-	<ul>
-		<li><strong>404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
-	</ul>
-	
+	<p>You can also override the default macros provided by Prontotype by editing the macro files in <code>/structure/PT/macros</code>. See the <a href="#macros">documentation on macros</a> for more information.</p>
 	
 </article>
 
-<h1>Adding Functionality</h1>
+
+<h1 id="macro-ref">Macro Reference</h1>
+
+<article>
+	<p>Documentation coming soon.</p>	
+</article>
+
+<h1 id="tag-ref">Tag Reference</h1>
+
+<article>
+	<p>Documentation coming soon.</p>
+</article>
+
 

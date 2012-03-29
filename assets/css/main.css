@@ -128,7 +128,7 @@ article p:last-child {
 article h2 {
     font-size: 20px;
     font-weight: normal;
-	padding: 0.5em 15px;
+	padding: 0.5em 11px;
     margin: -5px -10px 15px -10px;
 	color: #222;
 	background: #EEE;
@@ -389,28 +389,20 @@ h4 code {
 	padding: 1px 4px;
 }
 
-pre code {
-	box-sizing: border-box;
-	padding: 20px;
-	margin-bottom: 20px;
-	display: block;
-}
-
 pre code strong {
 	color: #D623A2;
 	font-weight: normal;
 }
 
 pre code {
+	padding: 14px 20px 13px 20px;
+	margin-bottom: 20px;
+	display: block;
 	color: #777;
 	font-size: 13px;
 	background: #FAfAfA;
 	line-height: 18px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
 	word-wrap: break-word;
-	margin-bottom: 15px;
 	border-top: 1px solid #DDD;
 	border-bottom: 1px solid #DDD;	 
 }

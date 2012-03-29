@@ -30,7 +30,7 @@ title: Overview
 	</ul>
 
 </article>
-	
+
 <div class="msg">
 	<p>Please note that Prontotype is current under active development and should not be considered stable until it reaches a 1.0 release.</p>
 </div>
@@ -250,7 +250,60 @@ title: Overview
 
 <h1 id="functionality">Functionality</h1>
 
+
+<article id="data">
+	
+	<h2>Working with Data</h2>
+	
+	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML or CSV format.</p>
+	
+	<p>The data in these files can be accessed from within your prototype's pages and layouts using the <code>{{ data }}</code> template tag. This uses the Twig 'dot notation' to access the data structure defined in your files and prints out the appropriate value. The general format of this is as follows:</p>
+	
+	<pre><code>{{ data.<strong>FILENAME</strong>.<strong>DATA.PATH.IN.FILE</strong> }}</code></pre>
+	
+	<p>Where <code>FILENAME</code> is the name of the data file you want to access (without the filename) and <code>DATA.PATH.IN.FILE</code> is the dot-notation path of the data variable you wish to access within that file. So an example might be:</p>
+	
+<pre><code data-language="html"><strong>{{ data.mydata.people.bob.email }}</strong>  # outputs 'bob@thebuilder.com'
+
+# or you can use it in control structures too:
+
+<strong>{% if data.mydata.people.bob.role == 'builder' %}</strong>
+  &lt;p&gt;You are a builder!&lt;/p&gt;
+<strong>{% endif %}</strong>
+</code></pre>
+	
+	<p>To help explain that a bit better, let's look at some examples for both YAML and CSV format data files.</p>
+	
+	<h3>YAML data</h3>
+	
+	<h4>Example YAML file: <code>/data/example.yml</code></h4>
+	
+<pre><code data-language="shell">people:
+  bob:
+    first_name: Bob
+	last_name: Builder
+	email: bob@thebuilder.com
+  pat:
+    first_name: Pat
+	last_name: Postman
+	email: pat@thepostman.com
+
+links:
+  - http://example.com
+  - http://test.com
+</code></pre>
+	
+	<h3>CSV data</h3>
+	
+	<h4>Example CSV file: </h4>
+	
+	
+	<p class="note">Note: If you have two files with the same filenames but in different formats (i.e. mydata.yml and mydata.csv) then Pronotype will attempt to merge the contents of the two files.</p>
+	
+</article>
+
 <article id="assets">
+	
 	<h2>Assets</h2>
 
 	<p>Documentation coming soon.</p>
@@ -330,11 +383,6 @@ title: Overview
 		
 </article>
 
-<article id="data">
-	<h2>Providing Data</h2>
-	<p>Documentation coming soon.</p>
-</article>
-
 <article id="users">
 	<h2>Users and Logins</h2>
 	<p>Documentation coming soon.</p>
@@ -379,7 +427,10 @@ title: Overview
 	
 	<p>Where <code>&lt;shorturl_trigger&gt;</code> is as defined in your config file (defaults to <code>_p</code>) and <code>&lt;page_id&gt;</code>  is the ID you've given to your page.</p>
 	
-	<p>So (using the default configuration settings) a short url to the page at <code>/structure/pages/about/<strong>[comp]-</strong>company.html</code> would be http://example.com/index.php/_p/comp</p>
+	<p>So (using the default configuration settings) an example short url for a page would be:</p>
+	
+	<pre><code>/structure/pages/about/<strong>[comp]-</strong>company.html  ==>  http://example.com/index.php/_p/comp</code></pre>
+	
 	
 	<p>Sharing these short links as opposed to the full page URLs is useful because even if you move the page around while the prototype is being constructed, <strong>the short URL will always route to the correct page</strong>. And obviously the links are shorter and so (probably!) easier to remember.</p>
 	

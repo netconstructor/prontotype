@@ -67,10 +67,16 @@ title: Overview
 	<p>By default, Prontotype URLs contain 'index.php' in them. If you want to remove this to make the URLs a bit prettier, then it's pretty straightforward to do so. The example below assumes you are using Apache to serve up your prototype:</p>
 	
 	<ol>
-		<li>Change the filename of the supplied `htaccess.txt` file to `.htaccess` (Note this may make it an 'invisible' file, depending on your OS).</li>
+		<li>Change the filename of the supplied <code>htaccess.txt</code> file to <code>.htaccess</code> (Note this may make it an 'invisible' file, depending on your OS).</li>
 		<li>Open the config.yml file in the root of your install and set the 'index' configuration option to an empty string (i.e. delete the default value of 'index.php')</li>
 		<li>You should now have URLs without the ugly 'index.php' bit in them.</li>
 	</ol>
+	
+	<h3>Robots.txt</h3>
+	
+	<p>We've assumed that you are using Prontotype for prototyping, and so you probably don't want it's pages to be indexed by search engines if it is placed in a web-accessible location. So the <code>robots.txt</code> file that is included in the distribution will block all search engines by default.</p>
+	
+	<p>If for some reason you <em>do</em> want your prototype to be indexed, then make sure you remove (or amend) this file!</p>
 		
 </article>
 
@@ -515,10 +521,18 @@ title: Overview
 	<p>Documentation coming soon.</p>
 </article>
 
-
 <article id="users">
+	
 	<h2>Users and Logins</h2>
+	
 	<p>Documentation coming soon.</p>
+	
+	<!--
+	<p>Prontotype features a simple but flexible system to mock-up user authentication scenarios.</p>
+	
+	<p>At it's core are a couple of </p>
+	-->
+	
 </article>
 
 <article id="notes">

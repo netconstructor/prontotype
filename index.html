@@ -343,7 +343,46 @@ title: Overview
 	
 	<h2>Assets</h2>
 
-	<p>Documentation coming soon.</p>
+	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to make working with static assets - CSS/JS/images - a little bit easier. It also comes bundled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> (if that is your thing) to help kick-start your frontend code.</p>
+	
+	<p>To use any of the assets macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. All that involves is including the following line at the top of your page, layout template or include file:</p>
+	
+	<pre><code data-language="html"><strong>{% import 'PT/macros/assets.html' as assets %}</strong></code></pre>
+
+	<p>And then you can use any of the assets macros in your templates using the <code>{{ assets }}</code> variable, as detailed below:</p>
+	
+	<h3>Including Twitter Bootstrap</h3>
+	
+	<p>Once you've imported the assets macros (see above), then you can easily include Twitter Bootstrap CSS and JS files into your page using the following tags:</p>
+		
+<pre><code data-language="html"><strong>{{ assets.bootstrap }}</strong>  &lt;!-- Generates &lt;link&gt; and &lt;script&gt; tags to include both the Bootstrap CSS and JS --&gt;
+	
+<strong>{{ assets.bootstrap(true) }}</strong>  &lt;!-- As above, but includes Bootstrap 'responsive' CSS file too --&gt;
+
+<strong>{{ assets.bootstrap_js() }}</strong>  &lt;!-- Generate a &lt;script&gt; tag to include the Bootstrap JS file --&gt;
+
+<strong>{{ assets.bootstrap_css() }}</strong>  &lt;!-- Generate a &lt;link&gt; tag to include the Bootstrap CSS file --&gt;
+
+<strong>{{ assets.bootstrap_css(true) }}</strong>  &lt;!-- As above, but includes Bootstrap 'responsive' CSS file too --&gt;
+</code></pre>
+	
+	<p class="note">Note that these tags will not include jQuery, so if you are using the Bootstrap JS you will need to included that in your page first.</p>
+	
+	<h3>Using LESS to write your stylesheets</h3>
+	
+	<p>Prontotype has built in support for generating CSS from <a href="http://lesscss.org/">LESS</a> files. It does this on the fly, so you can use LESS files instead of 'straight' CSS and have them automatically compiled at runtime into valid CSS.</p>
+	
+	<p>All you need to do is create your LESS files in a location of your choosing within your project (just make sure they are using the <strong>.less</strong> file extension!), and then just use the following tag to generate a <code>&lt;link&gt;</code> tag that will automagically point to the rendered stylesheet:</p>
+	
+<pre><code data-language="html"><strong>{{ assets.stylesheet('/path/to/your/file.less') }}</strong>
+&lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;all&quot;&gt; --&gt;
+</code></pre>
+
+<p>You can also optionally specify a <strong>media type</strong> as the second parameter (defaults to 'all' if not specified):</p>
+
+<pre><code data-language="html"><strong>{{ assets.stylesheet('/path/to/your/file.less', 'screen') }}</strong>
+&lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot;&gt; --&gt;
+</code></pre>
 	
 </article>
 
@@ -352,6 +391,8 @@ title: Overview
 	<h2>Macros</h2>
 
 	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
+	
+	<p>In fact, if you've used any of the <a href="#assets">asset</a> helpers (or just read the section above!) then you've already seen some of the built-in macros Prontotype comes with.</p>
 		
 	<h3>Defining Macros</h3>
 		
@@ -360,63 +401,18 @@ title: Overview
 		
 	<h3>Importing Macros</h3>
 		
-	<p>Documentation coming soon.</p>
+	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
+	
+	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacro %}</strong></code></pre>
+
+	<p>Where <code>yourMacro</code> can be a variable name of your choosing. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
+	
+	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_input' ) }}</strong></code></pre>
 		
 
 	<h3>Built in Macros</h3>
 	
 	<p>Documentation coming soon.</p>
-
-	<!-- <p>Prontotype also comes with some built-in macros to make it quick to prototype common things like forms, navigation and more.</p>
-		
-	<p>And don't forget, if the markup that these macros output isn't quite to your taste you can easily override them by defining your own macros at any time.</p> -->
-		
-		
-
-<!-- <div class="example">
-	
-		<h3 class="title">Example: A simple registration form</h3>
-	
-		<div class="rendered">
-			
-			{{ form.form_open }}
-	
-				{{ form.input('User name') }}
-	
-				{{ form.input('Password', 'password') }}
-	
-				{{ form.textarea('Tell us a little about yourself') }}
-	
-				{{ form.checkbox('I agree to the terms and conditions') }}
-	
-				{{ form.button('Register') }}
-	
-			{{ form.form_close }}
-			
-		</div>
-		
-		<div class="code">
-	<h4>Code:</h4>
-	<pre>
-	{{ form.form_open }}
-	
-	{{ form.input('User name') }}
-	
-	{{ form.input('Password', 'password') }}
-	
-	{{ form.textarea('Tell us a little about yourself') }}
-	
-	{{ form.checkbox('I agree to the terms and conditions') }}
-	
-	{{ form.button('Register') }}
-	
-	{{ form.form_close }}
-	</pre>
-			
-		</div>
-		
-	</div> -->
-		
 		
 </article>
 
@@ -489,6 +485,14 @@ title: Overview
 # Set to an empty string if using mod_rewrite or the nginx equivalent
 #==================
 <strong>index:</strong> index.php
+
+#==================
+# cache_path
+# -----------------
+# Specify a path to a writeable directory (relative to the Prontotype root directory)
+# to enable caching of templates and data
+#==================
+<strong>cache_path:</strong> 
 
 #==================
 # authenticate

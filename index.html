@@ -272,33 +272,70 @@ title: Overview
 <strong>{% endif %}</strong>
 </code></pre>
 	
+	<p class="note">Note: If you have two files with the same filenames but in different formats (i.e. mydata.yml and mydata.csv) then Pronotype will attempt to merge the contents of the two files.</p>
+	
 	<p>To help explain that a bit better, let's look at some examples for both YAML and CSV format data files.</p>
 	
 	<h3>YAML data</h3>
 	
+	<p><a href="http://en.wikipedia.org/wiki/YAML">YAML</a> is a straightforward, human-readable way to represent structured data in plain text files. Prontotype will make data in any YAML files (with a <strong>.yml</strong> file extension) in the <code>/data</code> directory available to your templates. You can use any valid YAML syntax to represent your data.</p>
+	
 	<h4>Example YAML file: <code>/data/example.yml</code></h4>
 	
-<pre><code data-language="shell">people:
-  bob:
-    first_name: Bob
-	last_name: Builder
-	email: bob@thebuilder.com
-  pat:
-    first_name: Pat
-	last_name: Postman
-	email: pat@thepostman.com
+<pre><code data-language="shell"><strong>people:</strong>
+  <strong>bob:</strong>
+    <strong>first_name:</strong> Bob
+    <strong>last_name:</strong> Builder
+    <strong>email:</strong> bob@thebuilder.com
+  <strong>pat:</strong>
+    <strong>first_name:</strong> Pat
+    <strong>last_name:</strong> Postman
+    <strong>email:</strong> pat@thepostman.com
 
-links:
-  - http://example.com
-  - http://test.com
+<strong>links:</strong>
+  <strong>- url:</strong> http://example.com
+    <strong>text:</strong> An example 
+  <strong>- url:</strong> http://test.com
+    <strong>text:</strong> A test link
 </code></pre>
-	
+
+<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+&lt;p&gt;These are the links:&lt;/p&gt;
+&lt;ul&gt;
+  {% for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
 	<h3>CSV data</h3>
 	
-	<h4>Example CSV file: </h4>
+	<p>Prontotype will parse CSV files in your <code>/data</code> directory and make them available to your templates. By default Prontotype expects your CSV data to be formatted with a <strong>header row of column names</strong>, one of which should be <strong>'id'</strong>. This 'id' column should be used to define IDs for each row. These IDs can then be used to reference individual rows.</p>
 	
+	<p>Of course CSVs can only represent a very straightforward array-style datatype - if need more complex data structures then you will need to use YAML files to represent your data.</p>
 	
-	<p class="note">Note: If you have two files with the same filenames but in different formats (i.e. mydata.yml and mydata.csv) then Pronotype will attempt to merge the contents of the two files.</p>
+	<p class="note">If your data is specified without column headers or IDs you can <a href="#configuration">configure Prontotype</a> to give you access to the CSV data using numeric keys instead. You can also specify custom delimiter, enclosure and escape characters if required to match your CSV file's setup.</p>
+	
+	<h4>Example CSV file:  <code>/data/example2.csv</code></h4>
+	
+<pre><code>"id","first_name","last_name","email"
+"bob","Bob","Builder","bob@thebuilder.com"
+"pat","Pat","Postman","pat@thepostman.com"
+</code></pre>
+
+<h4>Usage: <code>/structure/pages/example2.html</code></h4>
+<pre><code data-language="html">{% set bob = <strong>data.example2.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+&lt;p&gt;These are the links:&lt;/p&gt;
+&lt;ul&gt;
+  {% for person in <strong>data.example2</strong> %}
+    &lt;li&gt;Name: <strong>{{ person.first_name }}</strong> <strong>{{ person.last_name }}</strong>&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
 	
 </article>
 

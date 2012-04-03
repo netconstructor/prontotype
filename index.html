@@ -247,6 +247,37 @@ title: Overview
 	
 </article>
 
+<article id="macros">
+	
+	<h2>Macros</h2>
+
+	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
+	
+	<p>In fact, if you've used any of the <a href="#assets">asset</a> helpers (or just read the section on assets below!) then you've already seen some of the built-in macros Prontotype comes with.</p>
+		
+	<h3>Defining Macros</h3>
+		
+	<p>Documentation coming soon.</p>
+	
+		
+	<h3>Importing Macros</h3>
+		
+	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
+	
+	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacro %}</strong></code></pre>
+
+	<p>Where <code>yourMacro</code> can be a variable name of your choosing. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
+	
+	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_input' ) }}</strong></code></pre>
+		
+
+	<h3>Built-in Macros</h3>
+	
+	<p>Documentation coming soon.</p>
+		
+</article>
+
+
 
 <h1 id="functionality">Functionality</h1>
 
@@ -386,35 +417,16 @@ title: Overview
 	
 </article>
 
-<article id="macros">
-	
-	<h2>Macros</h2>
-
-	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
-	
-	<p>In fact, if you've used any of the <a href="#assets">asset</a> helpers (or just read the section above!) then you've already seen some of the built-in macros Prontotype comes with.</p>
-		
-	<h3>Defining Macros</h3>
-		
+<article id="navigation">
+	<h2>Generating Navigation</h2>
 	<p>Documentation coming soon.</p>
-		
-		
-	<h3>Importing Macros</h3>
-		
-	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
-	
-	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacro %}</strong></code></pre>
-
-	<p>Where <code>yourMacro</code> can be a variable name of your choosing. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
-	
-	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_input' ) }}</strong></code></pre>
-		
-
-	<h3>Built in Macros</h3>
-	
-	<p>Documentation coming soon.</p>
-		
 </article>
+
+<article id="forms">
+	<h2>Building Forms</h2>
+	<p>Documentation coming soon.</p>
+</article>
+
 
 <article id="users">
 	<h2>Users and Logins</h2>
@@ -599,13 +611,6 @@ title: Overview
 	
 </article>
 
-
-
-<h1 id="macro-ref">Macro Reference</h1>
-
-<article>
-	<p>Documentation coming soon.</p>	
-</article>
 
 <h1 id="tag-ref">Tag Reference</h1>
 

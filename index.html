@@ -58,6 +58,10 @@ title: Overview
 		<li>That's it :-)</li>
 	</ol>
 	
+	<h3 id="upgrading">Upgrading Prontotype</h3>
+	
+	<p>If you are upgrading from an older version of Prontotype, you should <strong>only</strong> need to replace the old <code>/app</code> directory with the <code>/app</code> directory from the latest version. Doing so will leave all your configuration, structure and data untouched. In the (hopefully unlikely!) event of you having to make other changes to upgrade between versions they will be documented here.</p>
+	
 	<h3 id="clean-urls">Clean URLs</h3>
 	
 	<p>By default, Prontotype URLs contain 'index.php' in them. If you want to remove this to make the URLs a bit prettier, then it's pretty straightforward to do so. The example below assumes you are using Apache to serve up your prototype:</p>
@@ -253,12 +257,27 @@ title: Overview
 
 	<p>Macros are little helper 'functions' that you can easily define once and then use throughout your templates to make sure that common HTML snippets stay editable in one place. They are a bit like <em>page includes</em>, except that they can use optional parameters to adjust the HTML or content output on a per-use basis, which makes them very flexible.</p>
 	
-	<p>In fact, if you've used any of the <a href="#assets">asset</a> helpers (or just read the section on assets below!) then you've already seen some of the built-in macros Prontotype comes with.</p>
+	<p>In fact, if you've used any of the <a href="#assets">asset</a>, <a href="#navigation">navigation</a> or <a href="#forms">form</a> helpers then you've already seen some of the built-in macros Prontotype comes with.</p>
 		
 	<h3>Defining Macros</h3>
 		
-	<p>Documentation coming soon.</p>
+	<p>Macros should be definined in an html file and placed somewhere within your <code>/structure</code> directory - the convention is to place them in <code>/structure/macros</code> but you can place them wherever you like. Each file can contain as many macro definitions as you like.</p>
 	
+	<p>An example macro for generating a hCard might look like this:</p>
+	
+<pre><code data-language="html"><strong>{% macro vcard(name, url, tels) %}</strong>
+&lt;div class=&quot;vcard&quot;&gt;
+  &lt;a class=&quot;url fn&quot; href=&quot;<strong>{{ url }}</strong>&quot;&gt;<strong>{{ name }}</strong>&lt;/a&gt;
+  <strong>{% for t in tels %}</strong>
+  &lt;span class=&quot;tel&quot;&gt;
+    &lt;span class=&quot;type&quot;&gt;<strong>{{ t.type }}</strong>&lt;/span&gt;: &lt;span class=&quot;value&quot;&gt;<strong>{{ t.number }}</strong>&lt;/span&gt;
+  &lt;/span&gt;
+  <strong>{% endfor %}</strong>
+&lt;/div&gt;
+<strong>{% endmacro %}</strong>
+</code></pre>
+	
+	<p>Arguments to macros are always optional, and macros can reference other macros in the same file using the special <code>_self</code> variable. You can read more about defining macros in the <a href="http://twig.sensiolabs.org/doc/tags/macro.html">Twig documentation</a> which goes into a lot more detail.</p>
 		
 	<h3>Importing Macros</h3>
 		
@@ -266,14 +285,13 @@ title: Overview
 	
 	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacro %}</strong></code></pre>
 
-	<p>Where <code>yourMacro</code> can be a variable name of your choosing. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
+	<p>Where <code>yourMacro</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
 	
-	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_input' ) }}</strong></code></pre>
+	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_argument' ) }}</strong></code></pre>
 		
-
 	<h3>Built-in Macros</h3>
 	
-	<p>Documentation coming soon.</p>
+	<p>Prontotype comes with number of built-in macros to help with <a href="#assets">working with assets</a>, <a href="#navigation">generate navigation</a> and <a href="#forms">build forms</a>. The macro definition files live in <code>/app/views/PT/macros</code> but if you need to edit them it is recommended that you <strong>don't</strong> change them here: instead see the <a href="#overriding-defaults">cookbook entry on overriding system defaults</a> for a way to do this that won't break if you update Prontotype to a newer version.</p>
 		
 </article>
 
@@ -372,7 +390,7 @@ title: Overview
 
 <article id="assets">
 	
-	<h2>Assets</h2>
+	<h2>Asset Helpers</h2>
 
 	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to make working with static assets - CSS/JS/images - a little bit easier. It also comes bundled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> (if that is your thing) to help kick-start your frontend code.</p>
 	
@@ -580,7 +598,7 @@ title: Overview
 
 <article id="overriding-defaults">
 	
-	<h2>Overriding default system pages</h2>
+	<h2>Overriding default system pages and macros</h2>
 	
 	<p>Prontotype uses a number of 'default' pages and layouts for use when it can't find the page you are looking for (or a mistake in your template causes a problem!). If you want to customise these pages to better match the style of your prototype, then you can easily override them by taking the following steps:</p>
 	
@@ -607,7 +625,13 @@ title: Overview
 	
 	<h3>Macros</h3>
 	
-	<p>You can also override the default macros provided by Prontotype by editing the macro files in <code>/structure/PT/macros</code>. See the <a href="#macros">documentation on macros</a> for more information.</p>
+	<p>You can also override the <a href="#macros">default macros</a> provided by Prontotype by editing the macro files that you have just copied into <code>/structure/PT/macros</code>. This can be useful if you want to amend the HTML output of these built-in macros, or change their behaviour to better suit your requirements. The available macros files are:</p>
+	
+	<ul>
+		<li class="file"><strong>/macros/assets.html</strong> - The <a href="#assets">asset helper</a> macros.</li>
+		<li class="file"><strong>/macros/forms.html</strong> - The <a href="#forms">form builder</a> macros.</li>
+		<li class="file"><strong>/macros/navigation.html</strong> - The <a href="#navigation">navigation generator</a> macros.</li>
+	</ul>
 	
 </article>
 

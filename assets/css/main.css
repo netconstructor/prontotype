@@ -162,6 +162,12 @@ article h4 code {
 	top: -3px;
 }
 
+article h2 + p {
+	font-size: 16px;
+	line-height: 1.5;
+	color: #444;
+}
+
 article .lede {
     font-size: 24px;
     color: #888;
@@ -277,9 +283,23 @@ td, th {
 }
 
 th {
-    border: 1px solid #444;
-    background: #333;
-    color: #EEE;
+    border: 1px solid #CCC;
+    background: #DDD;
+    color: #222;
+}
+
+td.key {
+	font-weight: bold;
+}
+
+td.desc {
+	color: #555;
+	font-size: 13px;
+}
+
+td.default {
+	color: #1b9186;
+	text-align: center;
 }
 
 /* @end Tables */

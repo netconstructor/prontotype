@@ -107,7 +107,7 @@ title: Overview
 	
 	<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
 	
-	<p>However&hellip; files in the pages directory are also <strong>parsed as Twig templates</strong>. That means you can use a <a href="#tag-ref">whole bunch of template tags</a> within them to give you access to data, include other files, inherit layouts and more.</p>
+	<p>However&hellip; files in the pages directory are also <strong>parsed as Twig templates</strong>. That means you can use a <a href="#tag-ref">whole bunch of template tags</a> within them to give you <a href="#data">access to data</a>, <a href="#includes">include other files</a>, <a href="#layouts">inherit layouts</a> and more.</p>
 		
 	<h3 id="page-ordering">Ordering pages <em>(optional)</em></h3>
 	
@@ -199,7 +199,6 @@ title: Overview
 &lt;/html&gt;
 </code></pre>
 	
-	
 	<p class="note">Note the area delinated with the block/endblock named tags - this is the placeholder section that your page content will be dropped into. Any text between these tags will be used as default content if you do not provide content for that area in your page file.</p>
 	
 	<h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.html</code> </h4>
@@ -283,11 +282,11 @@ title: Overview
 		
 	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
 	
-	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacro %}</strong></code></pre>
+	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacros %}</strong></code></pre>
 
-	<p>Where <code>yourMacro</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
+	<p>Where <code>yourMacros</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
 	
-	<pre><code><strong>{{ yourMacro.doSomething( 'with_this_argument' ) }}</strong></code></pre>
+	<pre><code><strong>{{ yourMacros.doSomething( 'with_this_argument' ) }}</strong></code></pre>
 		
 	<h3>Built-in Macros</h3>
 	
@@ -295,10 +294,7 @@ title: Overview
 		
 </article>
 
-
-
 <h1 id="functionality">Functionality</h1>
-
 
 <article id="data">
 	
@@ -436,8 +432,82 @@ title: Overview
 </article>
 
 <article id="navigation">
+	
 	<h2>Generating Navigation</h2>
-	<p>Documentation coming soon.</p>
+	
+	<p>In order to help keep your navigation up-to-date as you add/remove/move pages, Prontotype comes with some built-in navigation <a href="#macros">macros</a> to generate navigation for you.</p>
+	
+	<p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
+	
+	<pre><code data-language="html"><strong>{% import 'PT/macros/navigation.html' as nav %}</strong></code></pre>
+	
+	<p>For all generated navigation, the page 'name' displayed <strong>will be derived from the filename</strong>. This is done by converting underscores and dashes in the filename to spaces, and capitalising the individual words. The only exception to this is the homepage and the 'index' page in each section. The names used for these are defined globally in the <a href="#configuration">configuration</a> file, and can be overridden if required.</p>
+	
+	<h3>Generating a page list</h3>
+	
+	<p>The <code>{{ nav.page_tree() }}</code> macro will generated a nested list of pages within your site, ideal for generating those snazzy dropdown menus that you love so much. It accepts a JSON-style hash of parameters to help you configure it's behaviour, with the available configuration options as follows:</p>
+	
+	<table>
+		<tr>
+			<th>Key</th>
+			<th>Description</th>
+			<th>Default</th>
+		</tr>
+		<tr>
+			<td class="key">list_type</td>
+			<td class="desc">What to use as the HTML list type used for the rendered lists (<strong>ul </strong>or <strong>ol</strong>)</td>
+			<td class="default">ul</td>
+		</tr>
+		<tr>
+			<td class="key">id</td>
+			<td class="desc">The value of the <strong>id</strong> attribute to add to the outermost list element</td>
+			<td class="default na">N/A</td>
+		</tr>
+		<tr>
+			<td class="key">class</td>
+			<td class="desc">The value of the <strong>class</strong> attribute to add to the outermost list element</td>
+			<td class="default na">N/A</td>
+		</tr>
+		<tr>
+			<td class="key">note</td>
+			<td class="desc">The value of the <strong>data-note</strong> attribute to add to the outermost list element. Used for <a href="#notes">attaching notes</a> to the navigation</td>
+			<td class="default na">N/A</td>
+		</tr>
+		<tr>
+			<td class="key">start_from</td>
+			<td class="desc">The URL path of the page from which to generate the navigation from. Only subpages of the page identified by this URL will be displayed</td>
+			<td class="default">/</td>
+		</tr>
+		<tr>
+			<td class="key">depth</td>
+			<td class="desc">How many levels of navigation it should display.</td>
+			<td class="default">&infin;</td>
+		</tr>
+		<tr>
+			<td class="key">hide_index</td>
+			<td class="desc">Whether or not it should display a link for the 'index' page in each section</td>
+			<td class="default">false</td>
+		</tr>
+	</table>
+	
+	<p>The <strong>list item for the current page</strong> will automatically have a class of <code>current</code> added to it, and the <strong>parent list items of the current page</strong> will have a class of <code>parent</code> added to them.</p>
+	
+	<h4>Example of use:</h4>
+	
+<pre><code data-language="html"><strong>{{ nav.page_tree({ start_from: 'about', depth: 2, id: 'my-nav', hide_index: true }) }}</strong>
+&lt;!-- outputs: --&gt;
+&lt;ul id=&quot;my-nav&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;/about&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;parent&quot;&gt;&lt;a href=&quot;/about/company&quot;&gt;Company&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li class=&quot;current&quot;&gt;&lt;a href=&quot;/about/company/people&quot;&gt;People&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;/about/company/history&quot;&gt;History&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;/about/company/jobs&quot;&gt;Jobs&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
 </article>
 
 <article id="forms">

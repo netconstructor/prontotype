@@ -59,6 +59,7 @@ body {
     font-family: sans-serif;
     font-size: 15px;
     line-height: 1.4;
+	min-width: 320px;
 }
 
 body > .wrapper {
@@ -147,6 +148,14 @@ article h3 {
 	margin-top: 1.2em;
 }
 
+article h3 em {
+	font-weight: normal;
+	color: #888;
+	font-size: 0.85em;
+	position: relative;
+	top: -1px;
+}
+
 article h4 {
     font-size: 16px;
     font-weight: bold;
@@ -171,6 +180,7 @@ article h2 + p {
 article .lede {
     font-size: 24px;
     color: #888;
+	max-width: 730px;
 }
 
 article .lede em {
@@ -308,15 +318,19 @@ td.default {
 /* @group Section heads */
 
 #header {
-    overflow: hidden;
     float: left;
     width: 250px;
-	position: fixed;
     margin-left: -250px;
+	min-height: 900px;
 }
 
 #header .inner {
-    padding: 20px;
+	overflow-y: scroll;
+    padding: 20px 0 20px 20px;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 /* @end Section heads */
@@ -367,7 +381,7 @@ td.default {
     font-size: 28px;
     display: inline-block;
     font-weight: bold;
-	margin-bottom: 30px;
+	margin-bottom: 20px;
 }
 
 #header .head {
@@ -422,9 +436,11 @@ pre code {
 	font-size: 13px;
 	background: #FAfAfA;
 	line-height: 18px;
-	word-wrap: break-word;
 	border-top: 1px solid #DDD;
-	border-bottom: 1px solid #DDD;	 
+	border-bottom: 1px solid #DDD;
+	overflow-x: scroll;
+	box-sizing: border-box;
+	with: 100%;
 }
 
 code b {
@@ -448,7 +464,6 @@ code b {
 }
 
 .support.attribute,
-/*.support.tag-name,*/
 .support.css-property,
 .support.regex.modifier {
 	color: #1E658A;
@@ -475,3 +490,101 @@ code b {
 }
 
 /* @end Code */
+
+@media all and (max-width: 50em) {
+	
+	html {
+	    background: #F3F3F3;
+	}
+	
+	body > .wrapper {
+		padding-left: 0;
+	}
+	
+	.nav {
+		margin-left: 0;
+		margin-top: 14px;
+	}
+	
+	.hasJS .nav {
+		display: none;
+	}
+	
+	.hasJS .nav[data-state=open] {
+		display: block;
+	}
+	
+	.nav ul,
+	.download {
+		display: none;
+	}
+	
+	#header {
+		float: none;
+	    width: auto;
+	    margin-left: 0;
+		min-height: 0;
+		overflow: hidden;
+		background-color: #202020;
+	}
+	
+	#header .head {
+		padding: 0;
+	}
+	
+	#header .inner {
+		overflow: hidden;
+	    padding: 10px 20px 10px 20px;
+		position: relative;
+		height: auto;
+		width: auto;
+		box-sizing: border-box;
+	}
+	
+	#header .branding {
+		font-size: 24px;
+		margin-bottom: 0px;
+		display: block;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNAay06AAAAAUdEVYdENyZWF0aW9uIFRpbWUANC80LzEyNbgkfwAAAD5JREFUSIlj/P//PwMtARNNTaeHBSwMDAw0DaOhH0R0iYNGWlrAOOTzwWgyHXgLRpMpQTCaTAfegtFkShAAAD3wEK0LMxQvAAAAAElFTkSuQmCC);
+		background-position: 100% 3px;
+		background-repeat: no-repeat;
+	}
+
+	#content {
+	    float: none;
+	}
+
+}
+
+@media all and (max-width: 30em) {
+	
+	#content .inner {
+	    padding: 10px;
+	}
+	
+	aside.panel {
+		float: none;
+		margin: 0 0 20px 0;
+		width: auto;
+	}
+	
+	article {
+		background: #FFF;
+		padding: 15px 10px 10px 10px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid #DDD;
+		border-right: 1px solid #DDD;
+		overflow: hidden;
+		border-radius: 4px;
+	}
+	
+	article h2 {
+	    margin: -5px 0px 15px 0;
+	}
+	
+	article h4 code {
+		float: none;
+		margin-top: 5px;
+	}
+}
+

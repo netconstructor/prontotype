@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<script>var html = document.getElementsByTagName('html')[0]; html.className = html.className+' hasJS';</script>
+	<script>var html = document.getElementsByTagName('html')[0]; html.className += ' hasJS';</script>
 	
 	<link rel="stylesheet" href="/assets/css/main.css" media="all">
 	
@@ -18,12 +18,10 @@
 		<div class="inner">
 			
 			<div class="head">
-				
-				<a class="branding title" href="/"><span>Pronto</span>type</a>
-				
+				<a id="project-name" class="branding title" href="/"><span>Pronto</span>type</a>
 			</div>
 
-			<ul class="nav">
+			<ul id="main-nav" class="nav">
 				<li><a href="#overview">Overview</a></li>
 				<li><a href="#getting-started">Getting started</a>
 					<ul>
@@ -46,11 +44,11 @@
 						<li><a href="#navigation">Generating Navigation</a></li>
 						<li><a href="#forms">Building Forms</a></li>
 						<li><a href="#users">Users &amp; Logins</a></li>
-						<li><a href="#notes">Notes</a></li>
-						<li><a href="#toolbar">PT Toolbar</a></li>
-						<li><a href="#authentication">Password Protection</a></li>
+						<!--<li><a href="#notes">Notes</a></li>
+						<li><a href="#toolbar">PT Toolbar</a></li> -->
 						<li><a href="#short-urls">Short URLs</a></li>
 						<li><a href="#custom-routing">Custom Routing</a></li>
+						<li><a href="#authentication">Password Protection</a></li>
 					</ul>
 				</li>
 				<li><a href="#configuration">Configuration</a></li>
@@ -60,7 +58,7 @@
 					</ul>
 				</li>
 				<li><a href="#tag-ref">Tag Reference</a></li>
-				<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download &darr;</a></li>
+				<li class="download"><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download &darr;</a></li>
 			</ul>
 			
 		</div>
@@ -79,8 +77,18 @@
 	
 </div>
 
-<script src="/assets/js/rainbow.min.js"></script>
-<script>Rainbow.color();</script>
+<script>
+	var logo = document.getElementById('project-name'),
+		nav = document.getElementById('main-nav');
+		
+	logo.onclick = function(){
+		var state = nav.getAttribute('data-state');
+		if ( state === 'open' ) nav.setAttribute('data-state', '');
+		else nav.setAttribute('data-state', 'open');
+		return false;
+	}
+</script>
+
 
 </body>	
 </html>

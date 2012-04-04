@@ -4,6 +4,8 @@ title: Overview
 ---
 
 <article id="overview">
+		
+	<p class="lede"><em>Prontotype</em> is a lightweight, server-side framework to help you quickly build interactive, data-driven HTML prototypes.</p>
 	
 	<aside class="panel">
 		
@@ -13,27 +15,21 @@ title: Overview
 	
 	</aside>
 	
-	<p class="lede"><em>Prontotype</em> is a lightweight, server-side framework to help you quickly build interactive, data-driven HTML prototypes.</p>
-	
 	<ul>
 		<li>Quickly build linked, multi-page prototypes with realistic URLs</li>
 		<li>Define reusable chunks of HTML to make prototype-wide updates quick and easy</li>
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
-		<li>Add contextual notes to pages and content blocks that you can easily show/hide</li>
+		<!--<li>Add contextual notes to pages and content blocks that you can easily show/hide</li> -->
 		<li>Use YAML or CSV files to define data structures that will be accessible throughout your prototype</li>
 		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
-		<li>Auto-generate navigation, forms and more using inbuilt macros</li>
+		<li>Auto-generate navigation, forms and more using in-built macros</li>
 		<li>And plenty more!</li>
 	</ul>
 
 </article>
-
-<div class="msg">
-	<p>Please note that Prontotype is current under active development and should not be considered stable until it reaches a 1.0 release.</p>
-</div>
 	
 <h1 id="getting-started">Getting Started</h1>
 	
@@ -387,6 +383,33 @@ title: Overview
 &lt;/ul&gt;
 </code></pre>
 
+	<h3>Accessing your data via JavaScript</h3>
+	
+	<p>There are times when you might want to access the data structures you've defined from your frontend JavaScript code. Prontotype makes this easy by giving you a URL for each data file that returns a JSON representation of that data. This allows you to make a Ajax request to that URL to access the data.</p>
+	
+	<p>The URL for each data file looks like this:</p>
+	
+	<pre><code>http://example.com/<strong>&lt;data_trigger&gt;</strong>/<strong>&lt;datafile_name&gt;</strong></code></pre>
+	
+	<p>Where <code>&lt;data_trigger&gt;</code> is as defined in your config file in the 'triggers' section (defaults to <code>_data</code>) and <code>&lt;datafile_name&gt;</code>  is the name of the data file (without the file extension) that you wish to access.</p>
+	
+	<p>So, using the default configuration, to get a JSON representation of the data in a YAML file <code>/data/posts.yml</code> you would make an Ajax request to <code>http://example.com/_data/posts</code>.</p>
+	
+	<p>You can also take this a bit further. If you don't want all of the data in a file returned, you can drill down into your data by appending extra segments onto the URL to match your data structure, and only the matching subset of data will be returned. For instance, taking the YAML example data file below:</p>
+	
+	<h4>Example posts data file <code>/data/blog.yml</code></h4>
+	
+<pre><code><strong>title:</strong> My Really good blog
+<strong>posts:</strong>
+  <strong>post-1:</strong>
+    <strong>title:</strong> A blog post
+    <strong>body:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  <strong>post-2:</strong>
+    <strong>title:</strong> Another blog post
+    <strong>body:</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+</code></pre>
+	
+	<p>You could would be able to access a JSON representation of the first blog post's ('post-1') data at the URL <code>http://example.com/_data/blog/posts/post-1</code>, and the title of that post at <code>http://example.com/_data/blog/posts/post-1/title</code></p>
 	
 </article>
 
@@ -519,22 +542,94 @@ title: Overview
 <article id="forms">
 	<h2>Building Forms</h2>
 	<p>Documentation coming soon.</p>
+	<p>In the meantime - having a look in the form macros file located at <code>/app/views/PT/macros/forms.html</code> will give you a good idea of what is available to use!</p>
 </article>
 
 <article id="users">
 	
 	<h2>Users and Logins</h2>
 	
-	<p>Documentation coming soon.</p>
-	
-	<!--
 	<p>Prontotype features a simple but flexible system to mock-up user authentication scenarios.</p>
 	
-	<p>At it's core are a couple of </p>
-	-->
+	<h3>Defining Users <em>(optional)</em></h3>
+	
+	<p>You can define users and assign them properties like first name, last name and role(s) in a special file data file at <code>/data/users.yml</code>. An example of this file comes with Prontotype, and looks like this:</p>
+	
+	<h4>Example users file: <code>/data/users.yml</code></h4>
+
+<pre><code><strong>user:</strong>
+  <strong>username:</strong> user-example
+  <strong>name:</strong> Edward Xample
+  <strong>role:</strong> user
+    
+<strong>admin:</strong>
+  <strong>username:</strong> admin-example
+  <strong>name:</strong> Ellie Xample
+  <strong>role:</strong> admin
+</code></pre>
+	
+	<p>You can append to or replace these as needed - and properties such as username, name, role are entirely optional, and can be added to as you see fit. The only thing to note is that they each have a unique 'key' (such as <strong>user</strong> or <strong>admin</strong>) to reference them by. This is required if you want to use this user definition file.</p>
+	
+	<h3>The 'user' variable</h3>
+		
+	<p>Your pages and templates will all have access to a special <code>user</code> variable. The value of this will be null (empty) if there is no 'logged in' user. So to only show content to 'logged in' users you can do the following:</p>
+	
+<pre><code data-language="html"><strong>{% if user %}</strong>&lt;p&gt;Display some logged-in-only content here&lt;/p&gt;<strong>{% endif %}</strong></code></pre>
+	
+	
+	<p>If you have defined one or more users (see above) and one is 'logged in' then it will be set to the definition of that user. So (using the example users file above) if the '<strong>admin</strong>' user has logged in, then you could do the following in your pages and templates:</p>
+	
+<pre><code data-language="html"><strong>{{ user.name }}</strong> &lt;!-- prints out &#x27;Ellie Xample&#x27; --&gt;
+<strong>{{ user.username }}</strong> &lt;!-- prints out &#x27;admin-example&#x27; --&gt;
+<strong>{% if user.role == 'admin' %}</strong>&lt;p&gt;Display some admin-only content here&lt;/p&gt;<strong>{% endif %}</strong>
+</code></pre>
+
+	<p>If you <em>haven't</em> defined any users (or you don't specify one when logging them in), you can <strong>still use the login system</strong> - your <code>user</code> template variable will return <code>true</code> instead of a user object when logged in. So you can still use an 'if' statement to determine whether to hide/show content on depending on whether the anonymous user is logged in or not.</p>
+	
+	<h3>Logging in</h3>
+	
+	<p>To simulate a user logging into the system, you need to either make a POST or GET request to the <strong>login url</strong>. The login URL looks like this:</p>
+	
+	<pre><code>http://example.com/<strong>&lt;login_trigger&gt;</strong></code></pre>
+	
+	<p>Where <code>&lt;login_trigger&gt;</code> is as defined in your config file in the 'triggers' section (defaults to <code>_login</code>).</p>
+	
+	<p>You can optionally specify a <code>user</code> parameter with the id of a user you've defined in your <code>/data/users.yml</code> file, and/or a <code>redirect</code> parameter to let Prontotype know which URL you'd like to redirect to afterwards. If you don't specify a <code>redirect</code> parameter you user will be redirected to the homepage of your site after login.</p>
+	
+	<h4>Example: login link</h4>
+	
+<pre><code data-language="html">&lt;!-- Logs in the 'admin' user and redirects to /admin-area/welcome --&gt;
+&lt;a href=&quot;/_login?user=admin&redirect=/admin-area/welcome&quot;&gt;Admin login - click here&lt;/a&gt; 
+</code></pre>
+
+	<h4>Example: login form</h4>
+	
+<pre><code data-language="html">&lt;!-- Logs in the 'admin' user and redirects to /admin-area/welcome --&gt;
+&lt;form method=&quot;POST&quot; action=&quot;/_login&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;user&quot; value=&quot;admin&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;redirect&quot; value=&quot;/admin-area/welcome&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;Log in&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+
+	<h3>Logging out</h3>
+	
+	<p>To log out you just need to send the user to the <strong>logout URL</strong>, which looks like this:</p>
+	
+	<pre><code>http://example.com/<strong>&lt;logout_trigger&gt;</strong></code></pre>
+	
+	<p>Where <code>&lt;logout_trigger&gt;</code> is as defined in your config file in the 'triggers' section (defaults to <code>_logout</code>). You can optionally specify a <code>redirect</code> parameter to tell Prontotype where to redirect to after logout (default is to go to the homepage).</p>
+	
+	<h4>Example: logout link</h4>
+	
+<pre><code data-language="html">&lt;!-- Logs out the current user and redirects to /logout-success --&gt;
+&lt;a href=&quot;/_logout?redirect=/logout-success&quot;&gt;Log out&lt;/a&gt; 
+</code></pre>
+	
 	
 </article>
 
+<!--
 <article id="notes">
 	<h2>Notes</h2>
 	<p>Documentation coming soon.</p>
@@ -544,25 +639,7 @@ title: Overview
 	<h2>The Prontotype Toolbar</h2>
 	<p>Documentation coming soon.</p>
 </article>
-
-<article id="authentication">
-	<h2>Password-protecting your Prototype</h2>
-	
-	<p>If your prototype is accessible via the internet, then often you'll want to limit access to a select group of people. Prontotype makes this easy to do - all you need to do is add a <strong>username</strong> and <strong>password</strong> into your <code>config.yml</code> file, under <strong>authentication</strong> heading.</p>
-	
-	<p>So the appropriate section of your configuration file may look like this:</p>
-	
-<pre><code class="snippet" data-language="shell">...
-
-<strong>authenticate:</strong>
-  <strong>username:</strong> bob
-  <strong>password:</strong> bu1ld3r
-	  
-...</code></pre>
-	
-	<p>When people then try to access the prototype they will be redirected to a login page, where they will need to enter these details in order to gain access to the site.</p>
-	
-</article>
+-->
 
 <article id="short-urls">
 	
@@ -724,6 +801,21 @@ title: Overview
 
 </article>
 
+<article id="authentication">
+	<h2>Password-protecting your Prototype</h2>
+	
+	<p>If your prototype is accessible via the internet, then often you'll want to limit access to a select group of people. Prontotype makes this easy to do - all you need to do is add a <strong>username</strong> and <strong>password</strong> into your <code>config.yml</code> file, under <strong>authentication</strong> heading.</p>
+	
+	<p>So the appropriate section of your configuration file may look like this:</p>
+	
+<pre><code class="snippet" data-language="shell"><strong>authenticate:</strong>
+  <strong>username:</strong> bob
+  <strong>password:</strong> bu1ld3r
+</code></pre>
+	
+	<p>When people then try to access the prototype they will be redirected to a login page, where they will need to enter these details in order to gain access to the site.</p>
+	
+</article>
 
 <h1 id="configuration">Configuration</h1>
 

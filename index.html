@@ -585,11 +585,151 @@ title: Overview
 		
 </article>
 
+<article id="custom-routing">
+	
+	<h2>Custom routing</h2>
+	
+	<p>Prontotype has a custom routing system that lets you use a simple pattern matching syntax to effectively 'rewrite' (<strong>not</strong> redirect!) URLs.</p>
+	
+	<p>Custom routing definitions are defined under the 'routing' section in your <code>config.yml</code> file, and take the format:</p>
+	
+	<pre><code>"url/path/to/match" : "url/path/of/page/to/display"</code></pre>
+	
+	<p>You can define as many custom routes as you like; the first matched route (working from top to bottom) is the one that will be used.</p>
+	
+	<h3>Pattern matching</h3>
+	
+	<p>Just matching one URL and rendering a different page is probably not terribly useful. But Prontotype lets you use a number of <strong>wildcard tokens</strong> in your routing definitions that make this a much more powerful proposition.</p>
+	
+	<p>The following tokens are available to use in the 'match' side of you route definitions:</p>
+	
+	<table>
+		<tr>
+			<th>Token</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td class="key">(:any)</td>
+			<td class="desc">Matches any string of characters apart from those containing a slash (/) - i.e. will match any string within a single URL 'segment'</td>
+		</tr>
+		<tr>
+			<td class="key">(:num)</td>
+			<td class="desc">Matches any string of numbers</td>
+		</tr>
+		<tr>
+			<td class="key">(:all)</td>
+			<td class="desc">Matches all characters, including slashes, so will match multiple URL segments</td>
+		</tr>
+		<tr>
+			<td class="key">(:id=PAGEID)</td>
+			<td class="desc">Matches the URL path for the page identified by the id <strong>PAGEID</strong> ( <a href="#page-ids">More on page IDs here</a>). This token (unlike the others above) can also be used in the right-hand (the 'page to display') side of your routing definition.</td>
+		</tr>
+	</table>
+	
+	<p>You can use as many or as few of these as you like in each of the 'match' (left hand) side part of your routing definitions. Some examples might look like:</p>
+	
+<pre><code><strong>routes:</strong>
+# --------------------------------------
+# Matches: <b>posts/this-is-a-post</b>
+# Doesn't match: <b>posts/this-is-a-post/edit</b>
+# --------------------------------------
+  <strong>"posts/(:any)" : "posts/example"</strong>
+  
+# --------------------------------------
+# Matches: <b>pages/example/test/123/hello</b>
+# --------------------------------------
+  <strong>"pages/(:all)" : "pages/hello-world"</strong>
+
+# --------------------------------------
+# Matches: <b>people/1234/details</b>
+# Doesn't match: <b>people/bob/details</b>
+# --------------------------------------
+  <strong>"people/(:num)/(:any)" : "people/profile"</strong>
+
+# --------------------------------------
+# Matches: <b>url/for/page/with/id/tweetpage</b>
+# --------------------------------------
+  <strong>"(:id=tweetpage)" : "people/tweets"</strong>
+</code></pre>
+
+	<h3>Backreferences</h3>
+	
+	<p>You can also use a simple <strong>backreference syntax</strong> to reference the url fragments matched by the wildcard tokens in the 'page to route to' (i.e. right hand side) part of your routing definitions. The URL fragment matched by each token can be referenced by a dollar sign ($) followed by it's index number. So the fragemnt matched by first token can be referenced by <code>$1</code>, the second by <code>$2</code> etc. As an example:</p>
+
+<pre><code><strong>routes:</strong>
+# --------------------------------------
+# Matches: <b>posts/123/tags/unicorn</b> and displays the page at: <b>tags/unicorn</b>
+# --------------------------------------	
+  <strong>"posts/(:num)/tags/(:any)" : "tags/$2"</strong>
+</code></pre>
+
+	<h3>An example</h3>
+	
+	<p>As an example of what you can do with this, let's image that you've got a YAML data file set up that contains an array of blog posts data within it. It might look a bit like this:</p>
+	
+	<h4>Blog posts data file:<code>/data/blog.yml</code></h4>
+	
+<pre><code><strong>posts:</strong>
+  <strong>post-1:</strong>
+    <strong>title:</strong> A blog post
+    <strong>body:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  <strong>post-2:</strong>
+    <strong>title:</strong> Another blog post
+    <strong>body:</strong> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+</code></pre>
+	
+	<p>You've also got a page set up to display blog posts. That might look a bit like this:</p>
+	
+	<h4>Blog post display page: <code>/structure/blog/post.html</code></h4>
+	
+<pre><code data-language="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;My blog post&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+<strong>{% if data.blog.posts[url.segment.2] %}</strong>
+
+  <strong>{% set post = data.blog.posts[url.segment.2] %}</strong>
+  &lt;div class=&quot;content&quot;&gt;
+    &lt;h1&gt;<strong>{{ post.title }}</strong>&lt;/h1&gt;
+    &lt;div class=&quot;body&quot;&gt;
+      <strong>{{ post.body }}</strong>
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+<strong>{% else %}</strong>
+
+  &lt;p&gt;No blog post found, sorry!&lt;/p&gt;
+
+<strong>{% endif %}</strong>
+
+&lt;/body&gt;	
+&lt;/html&gt;
+</code></pre>
+
+<p class="note">Note that the <code>url.segment.2</code> tag is returning the value of the third (it's zero-indexed!) 'segment' of the URL.</p>
+
+	<p>Now all we need to do is set up a custom route to route all requests for a blog post into our blog post display page, and then our page will automagically go and fetch the data for the appropriate post from the YAML file and display it in our page.</p>
+	
+	<h4>Route definition: <code>/config.yml</code></h4>
+	
+<pre><code><strong>routes:</strong>	
+  <strong>"posts/(:any)" : "blog/post"</strong>
+</code></pre>
+	
+	<p><strong>And that's it!</strong> Now requests like <code>http://example.com/posts/post-1</code> will result in our <code>/structure/blog/post.html</code> page being rendered, which will then dynamically pull in data for the <strong>post-1</strong> post (as defined in our YAML file) and display it!</p>
+
+</article>
+
+
 <h1 id="configuration">Configuration</h1>
 
 <article>
 		
-	<p>Prontotype's default configuration should probably be just fine for you. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
+	<p>Prontotype's default configuration is fine for a lot of use cases. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
 
 	<p>Here's a brief overview of the settings, what they do and their default values:</p>
 	
@@ -671,14 +811,6 @@ title: Overview
 </article>
 
 <h1 id="cookbook">Cookbook</h1>
-
-<article id="custom-routing">
-	
-	<h2>Custom routing</h2>
-	
-	<p>Documentation coming soon.</p>
-	
-</article>
 
 <article id="overriding-defaults">
 	

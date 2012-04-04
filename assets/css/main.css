@@ -427,6 +427,10 @@ pre code {
 	border-bottom: 1px solid #DDD;	 
 }
 
+code b {
+	color: #333;
+}
+
 .comment {
 	color: #888;
 }

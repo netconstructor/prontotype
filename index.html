@@ -72,7 +72,7 @@ title: Overview
 	
 	<h3>Robots.txt</h3>
 	
-	<p>We've assumed that you are using Prontotype for prototyping, and so you probably don't want it's pages to be indexed by search engines if it is placed in a web-accessible location. So the <code>robots.txt</code> file that is included in the distribution will block all search engines by default.</p>
+	<p>We've assumed that you are using Prontotype for prototyping, and so you probably don't want its pages to be indexed by search engines if it is placed in a web-accessible location. So the <code>robots.txt</code> file that is included in the distribution will block all search engines by default.</p>
 	
 	<p>If for some reason you <em>do</em> want your prototype to be indexed, then make sure you remove (or amend) this file!</p>
 		
@@ -107,7 +107,7 @@ title: Overview
 	
 	<p>Pages are just files with a <code>.html</code> extension that reside in the <code>/structure/pages</code> directory.</p>
 	
-	<p>All requests for pages are routed into this directory, which means that (at it's simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
+	<p>All requests for pages are routed into this directory, which means that (at its simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
 	
 	<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
 	
@@ -139,7 +139,7 @@ title: Overview
 /site/pages/contact/<strong>[spg]-</strong>sales.html	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
 </code></pre>
 	
-	<p>Once your page has an ID, you can always <strong>print it's URL into your template</strong> by using:</p>
+	<p>Once your page has an ID, you can always <strong>print its URL into your template</strong> by using:</p>
 	
 	<pre><code><strong>{{ pages.link('PAGE-ID') }}</strong></code></pre>
 	
@@ -163,7 +163,7 @@ title: Overview
 		
 	<h2>Layouts</h2>
 		
-	<p>Prontotype uses <a href="http://twig.sensiolabs.org/">Twig</a> for it's templates, which allows it to support a powerful <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance</a> model. This means that you can define <strong>shared layouts</strong> that have <strong>placeholders for 'blocks' of content</strong> in them. Your pages can then be set up to 'inherit' a layout, so they only need to specify the content to be placed into the placeholder area.</p>
+	<p>Prontotype uses <a href="http://twig.sensiolabs.org/">Twig</a> for its templates, which allows it to support a powerful <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance</a> model. This means that you can define <strong>shared layouts</strong> that have <strong>placeholders for 'blocks' of content</strong> in them. Your pages can then be set up to 'inherit' a layout, so they only need to specify the content to be placed into the placeholder area.</p>
 	
 	<p>By convention, layouts for your prototype should be stored in a folder called '<strong>layouts</strong>' within your <code>/structure</code> directory. You will have to create this folder if you opt to use layouts in your prototype.</p>
 	
@@ -476,7 +476,7 @@ title: Overview
 	
 	<h3>Generating a page list</h3>
 	
-	<p>The <code>{{ nav.page_tree() }}</code> macro will generated a nested list of pages within your site, ideal for generating those snazzy dropdown menus that you love so much. It accepts a JSON-style hash of parameters to help you configure it's behaviour, with the available configuration options as follows:</p>
+	<p>The <code>{{ nav.page_tree() }}</code> macro will generated a nested list of pages within your site, ideal for generating those snazzy dropdown menus that you love so much. It accepts a JSON-style hash of parameters to help you configure its behaviour, with the available configuration options as follows:</p>
 	
 	<table>
 		<tr>
@@ -733,7 +733,7 @@ title: Overview
 
 	<h3>Backreferences</h3>
 	
-	<p>You can also use a simple <strong>backreference syntax</strong> to reference the url fragments matched by the wildcard tokens in the 'page to route to' (i.e. right hand side) part of your routing definitions. The URL fragment matched by each token can be referenced by a dollar sign ($) followed by it's index number. So the fragemnt matched by first token can be referenced by <code>$1</code>, the second by <code>$2</code> etc. As an example:</p>
+	<p>You can also use a simple <strong>backreference syntax</strong> to reference the url fragments matched by the wildcard tokens in the 'page to route to' (i.e. right hand side) part of your routing definitions. The URL fragment matched by each token can be referenced by a dollar sign ($) followed by its index number. So the fragemnt matched by first token can be referenced by <code>$1</code>, the second by <code>$2</code> etc. As an example:</p>
 
 <pre><code><strong>routes:</strong>
 # --------------------------------------
@@ -900,7 +900,7 @@ title: Overview
     <strong>id_header:</strong> id
 </code></pre>
 
-<p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to it's default.</p>
+<p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to its default.</p>
 
 </article>
 
